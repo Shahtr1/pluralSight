@@ -1,0 +1,22 @@
+package onlineCoaching.collections;
+
+public class MyClass1 implements Comparable<MyClass>{
+	String label,value;
+	public String toString() {
+		return label + " | " + value;
+	}
+	
+	public boolean equals(Object o) {
+		MyClass other = (MyClass) o;
+		return value.equalsIgnoreCase(other.value);
+	}
+	
+	/*
+	 *		-	:	this  <  other
+	 *		0	:	this  =  other
+	 *		+	:	this  >  other
+	 */
+	public int compareTo(MyClass other) {
+		return value.compareToIgnoreCase(other.value);
+	}
+}

@@ -1,0 +1,20 @@
+/*
+ * 	Most applications do not stand alone
+ * 		Rely on classes in other packages
+ * 		JDK packages located automatically
+ * 		May need help locating other packages
+ * 
+ * 	Locating packages at development time
+ * 		Specific to each IDE
+ * 		
+ * 	Locating packages at runtime
+ * 		Java provides a number of options discussed below
+ * 
+ * 
+ */
+
+package onlineCoaching.controllingAppExec;
+
+public class ClassLoading {
+
+}

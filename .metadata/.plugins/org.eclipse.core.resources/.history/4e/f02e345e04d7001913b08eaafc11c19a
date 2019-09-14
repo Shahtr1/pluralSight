@@ -1,0 +1,63 @@
+/*
+ * 	Most applications do not stand alone
+ * 		Rely on classes in other packages
+ * 		JDK packages located automatically
+ * 		May need help locating other packages
+ * 
+ * 	Locating packages at development time
+ * 		Specific to each IDE
+ * 		
+ * 	Locating packages at runtime
+ * 		Java provides a number of options discussed below
+ * 
+ * 	Default Class Loading
+ * 		By default Java searches current directory
+ * 			Classes must be in .class files
+ * 				Must be under packages directories
+ * 		As long everything is in one directory 
+ * 			C:\myDir> java onlineCoaching.controllingAppExec.ClassLoading
+ * 			and import other packages in main class
+ * 			But in many cases having these only in one directory may not be practical
+ * 	
+ * 	Control the way classes are located
+ * 		Specifying Class Path
+ * 			Can provide the list of paths to search
+ * 				Searched in the order they appear
+ * 				Current directory used only if in list
+ * 			Two options for specifying class path
+ * 				Environment variable
+ * 				Java command option
+ * 	
+ * 		Specifying Class Path as Environment variable
+ * 			Can specify as an environment variable
+ * 				Variable named CLASSPATH
+ * 			Becomes default path
+ * 				used by all programs that dont provide a specific path
+ * 			Use environment variable with caution
+ * 				Changing for one program can break another
+ * 			
+ * 			C:\myDir> set CLASSPATH=\otherDir
+ * 			//----      Classes loaded from \otherDir      ----\\
+ * 			C:\myDir> java onlineCoaching.controllingAppExec.ClassLoading
+ * 		
+ * 			This isnt safe
+ * 			Now moving to safer way
+ * 
+ * 		Class Path Structure
+ * 			Paths provided as delimited list 
+ * 				Windows -> separate with ;(semicolon)
+ * 				Unix platforms -> separate with :(colon)
+ * 				Searched in the order thay appear
+ * 	
+ */
+
+package onlineCoaching.controllingAppExec;
+
+public class ClassLoading {
+	public static void main(String[] args) {
+		
+	}
+}
+
+
+

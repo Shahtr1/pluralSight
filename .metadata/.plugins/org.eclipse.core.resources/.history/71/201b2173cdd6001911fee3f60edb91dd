@@ -1,0 +1,29 @@
+/*
+	 * 				Providing Default Properties
+	 * 					Often useful to provide default values
+	 * 						Simplifies configuration
+	 * 						Provide initial values for user preferences
+	 * 						Cumbersome to explicitly provide defaults for each getProperty call
+	 * 
+	 * 					Can create Properties with defaults
+	 * 						Pass default Properties to constructor
+	 * 							Searched if key not found in current Properties instances
+	 * 						Default properties take precedent over default value passed to getProperty
+	 * 				
+	 * 				Include Default Properties in Package
+	 * 					Default property file can be part of package
+	 * 						Create .properties file at development time
+	 * 							Build process includes file in package
+	 * 					Can load file from package
+	 * 						Takes advantage of Java resource system
+	 * 						Use getResourceAsStream method
+	 * 							Accessed through any class in package
+	 * 								ClassName.class		
+	 * 								this.getClass()
+	 */
+
+package onlineCoaching.controllingAppExec;
+
+public class ProvidingDefaultProps {
+
+}

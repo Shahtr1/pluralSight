@@ -1,0 +1,19 @@
+/*
+ * Can pass info to app on command line
+ * 		Easiest way to pass startup info
+ * 			Target of app processing
+ * 				Input/output files,URLs,etc.
+ * 			Behavior options
+ * 
+ * Arguments passed as a String array
+ * 		Received by app's main function
+ * 		Each argument is a separate element
+ * 			Separated by OS's whitespace
+ * 			Honor's OS's value quoting
+ */
+
+package onlineCoaching.cmdLine;
+
+public class Intro {
+
+}

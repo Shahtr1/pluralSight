@@ -1,0 +1,77 @@
+//Maps store key/value pairs
+
+/*
+ * 	Common Map Types
+ * 
+ * 		Interface			Description
+ * 	
+ * 		Map					Basic map operations
+ * 		SortedMap			Map whose keys are sorted
+ * 
+ *	//////////////////////////////////////////////////
+ *		
+ *		Class				Description
+ *		
+ *		HashMap				Efficient general purpose Map implementation
+ *		TreeMap				SortedMap implemented as a self-balancing tree 
+ *							Supports Comparable and Comparator sorting
+ *	
+ *	//////////////////////////////////////////////////////////
+ *
+ *	Common Map Methods
+ *	
+ *		Method				Description
+ *
+ *		put					Add key and value
+ *		putIfAbsent			Add key and value if key not contained or value null
+ *		get					Return value for key, if key not found return null
+ *		getOrDefault		Return value for key, if key not found return the provided default value
+ *		values				Return a Collection of the contained values
+ *		keySet				Return a Set of the contained values
+ *		
+ *				also supports lambda expressions
+ *		forEach				Perform action for each entry
+ *		replaceAll			Perform action for each entry replacing the each key's value with action's result
+ *
+ */
+
+package onlineCoaching.collections;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapCollections {
+	public static void main(String[] args) {
+		Map<String,String> map = new HashMap<>();
+		
+		map.put("2222","ghi");
+		map.put("3333","abc");
+		map.put("1111","def");
+		
+		String s1 = map.get("3333");
+		String s2 = map.get("9999");
+		String s3 = map.getOrDefault("9999","nope");
+		System.out.println(s1);
+		System.out.println(s2);
+		System.out.println(s3);
+		
+		//bi-consumer lambda expressions
+		map.forEach((k,v) -> System.out.println(k + " | " + v));
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
