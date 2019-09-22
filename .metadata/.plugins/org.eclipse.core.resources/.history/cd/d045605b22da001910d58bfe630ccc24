@@ -1,0 +1,41 @@
+/*
+ * Log System Divided into Components
+ * 		Each component handles specific task
+ * 		Easy to setup common behaviors
+ * 		Provides flexibility
+ * 
+ * 	Core Log Components
+ * 		3 core components
+ * 			Logger
+ * 				Accepts app calls
+ * 				It generates LogRecord and which is passed to Handler
+ * 			Handler
+ * 				Publishes logging information
+ * 				A logger can have multiple
+ * 				LogRecord is passed here, each handler has a formatter, so logRecord is passed there
+ * 			Formatter
+ * 				Formats log info for publication
+ * 				Each handler has one formatter
+ * 				formatter formats the text in String.
+ * 				String is passed back to handler and then to outside world
+ * 
+ * 			We can setLevels to Handlers
+ */
+
+package onlineCoaching.logSystem;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class AddLogComponents {
+	static Logger logger = Logger.getLogger("onlineCoaching.logSystem");
+	
+	public static void main(String[] args) {
+logger.setLevel(Level.FINE);
+		
+		logger.log(Level.SEVERE, "Uh Oh!!");
+		logger.log(Level.INFO, "My info message");
+		logger.log(Level.FINE, "My fine message");
+		logger.log(Level.FINEST, "My finest message");
+	}
+}

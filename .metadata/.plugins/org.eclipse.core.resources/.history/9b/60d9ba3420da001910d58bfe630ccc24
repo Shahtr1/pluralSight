@@ -1,0 +1,11 @@
+package onlineCoaching.logSystem;
+
+import java.util.logging.Logger;
+
+public class AddLogComponents {
+	static Logger logger = Logger.getLogger("onlineCoaching.logSystem");
+	
+	public static void main(String[] args) {
+		
+	}
+}

@@ -33,5 +33,10 @@
     <fullyQualifiedTypeName name="java.io.OutputStream"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="java.util.logging.Logger"/>
+    <fullyQualifiedTypeName name="com.sun.net.ssl.internal.www.protocol.https.Handler"/>
+    <fullyQualifiedTypeName name="java.util.logging.Handler"/>
+    <fullyQualifiedTypeName name="java.util.logging.SimpleFormatter"/>
+    <fullyQualifiedTypeName name="java.util.logging.Formatter"/>
+    <fullyQualifiedTypeName name="java.util.logging.ConsoleHandler"/>
     <fullyQualifiedTypeName name="java.util.logging.Level"/>
 </qualifiedTypeNameHistroy>

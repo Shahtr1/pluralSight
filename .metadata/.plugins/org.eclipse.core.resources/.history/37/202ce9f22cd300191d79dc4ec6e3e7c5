@@ -1,8 +1,0 @@
-//Maps store key/value pairs
-
-
-package onlineCoaching.collections;
-
-public class MapCollections {
-
-}

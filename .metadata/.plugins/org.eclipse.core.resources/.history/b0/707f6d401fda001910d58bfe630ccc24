@@ -1,0 +1,7 @@
+package onlineCoaching.logSystem;
+
+public class AddLogComponents {
+	public static void main(String[] args) {
+		
+	}
+}

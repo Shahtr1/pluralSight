@@ -1,0 +1,25 @@
+/*
+ * Log System Divided into Components
+ * 		Each component handles specific task
+ * 		Easy to setup common behaviors
+ * 		Provides flexibility
+ * 
+ */
+
+package onlineCoaching.logSystem;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class AddLogComponents {
+	static Logger logger = Logger.getLogger("onlineCoaching.logSystem");
+	
+	public static void main(String[] args) {
+logger.setLevel(Level.FINE);
+		
+		logger.log(Level.SEVERE, "Uh Oh!!");
+		logger.log(Level.INFO, "My info message");
+		logger.log(Level.FINE, "My fine message");
+		logger.log(Level.FINEST, "My finest message");
+	}
+}
