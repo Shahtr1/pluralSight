@@ -39,4 +39,5 @@
     <fullyQualifiedTypeName name="java.util.logging.Formatter"/>
     <fullyQualifiedTypeName name="java.util.logging.ConsoleHandler"/>
     <fullyQualifiedTypeName name="java.util.logging.Level"/>
+    <fullyQualifiedTypeName name="java.util.logging.FileHandler"/>
 </qualifiedTypeNameHistroy>

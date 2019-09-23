@@ -286,9 +286,6 @@ public class AddLogComponents {
 			 *	//the config file be
 			 *		com.ps.training.handlers=java.util.logging.ConsoleHandler
 			 *		com.ps.training.level=INFO
-			 *		//inorder to let entering work we do
-			 *			com.ps.training.Main.handlers=java.util.logging.FileHandler
-			 *			com.ps.training.Main.level=ALL
 		 */
 	}
 }

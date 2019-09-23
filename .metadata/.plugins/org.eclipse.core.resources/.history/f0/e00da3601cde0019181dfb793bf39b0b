@@ -276,19 +276,12 @@ public class AddLogComponents {
 			 * 		public class Main{
 			 * 			static Logger pkgLogger = Logger.getLogger("com.ps.training");
 			 * 			static Logger logger = Logger.getLogger("com.ps.training.Main");
-			 * 			psvm(){
-			 * 				logger.entering("com.ps.training","Main"); -->not logged because it needs FINER
-			 * 				logger.log(Level.INFO,"We're Logging!"); -->gets logged because of parent
-			 * 				//we calling on child logger with only configured parent logger
-			 * 			}
+			 * 			psvm()
 			 * 		}
 			 * 
 			 *	//the config file be
 			 *		com.ps.training.handlers=java.util.logging.ConsoleHandler
 			 *		com.ps.training.level=INFO
-			 *		//inorder to let entering work we do
-			 *			com.ps.training.Main.handlers=java.util.logging.FileHandler
-			 *			com.ps.training.Main.level=ALL
 		 */
 	}
 }

@@ -132,67 +132,7 @@
 
 /*
  * 	Log Configuration File
- * 		Configuration info can be sat in a file
- * 			Follows standard properties file format
- * 			Can replace code-based config
- * 			Can be used with code-based config
- * 		Set file name with a system property
- * 			java.util.logging.config.file
- * 			Pass value with Java -D option
- * 
- * 	Identifying Configuration Values
- * 		Specific values depend on classes
- * 			Most code-based options available
- * 		Naming of values for Handlers & Formatters
- * 			Fully qualified class name
- * 			Followed by a "dot" and the value name
- * 		Naming of values for Loggers
- * 			Name of Logger as passed to getLogger
- * 			Followed by a "dot" and the value name
- * 
- */
-
-/*
- * 	Logger Naming
- * 		Naming implies a parent-child relationship
- * 			LogManager links Loggers in a hierarchy based on each Logger's name
- * 		Should follow hierarchical meaning
- * 		Corresponds to type hierarchy
- * 			Each "dot" separates a level
- * 		Generally tied to a class full name	
- * 
- * 												com.ps
- * 									  		   / 	\
- * 								com.ps.training		com.ps.accounting
- * 									/		\	
- * 			  com.ps.training.Student		com.ps.training.Main				
- * 					^
- * 					|
- * 					|log
- * 			parents will log it too, but there would be a lot of duplicates so we can leverage it
- * 	Leveraging Logger Naming Hierarchy
- * 		Making the most of the Hierarchical system	
- * 			Focus on capturing important info
- * 				With the option to get details if needed
- * 			Manage setup primarily on parents
- * 			Manage log calls primarily at children
- * 
- * 			How can that actually work?????????????
- * 				Logging Hierarchy and Levels
- * 					Loggers do not require their to be level set
- * 						Log level can be null
- * 							Will inherit parent level
- * 						Primarily set level on parents
- * 							Normally somewhat restrictive level
- * 						Set more detail level on child if needed
- * 				Logging Hierarchy and Handlers
- * 					Loggers do not require handlers
- * 						A logger doesn't log if no handler
- * 							But does pass up to parent Logger
- * 						Primarily add Handlers to upper parents
- * 						Add Handlers to child if needed		
- * 					
- * 												
+ * 		
  */
 
 package onlineCoaching.logSystem;
@@ -219,77 +159,12 @@ public class AddLogComponents {
 		
 							/*
 //		Logging with FileHandler
-		new FileHandler(pattern,size,Rotating set)	
+//		new FileHandler(pattern,size,Rotating set)	
 		FileHandler hndlr = new FileHandler("%h/myapp_%g.log",1000,4);
 		h.setFormatter(new SimpleFormatter());
 		logger.addHandler(hndlr);
 		//Do Something
 							  */
-							
-		//Logging Code-based Configuration
-			/*
-			 * 		Handler h = new ConsoleHandler();
-			  		h.setLevel(Level.ALL);	
-					Formatter f = new SimpleFormatter();
-					h.setFormatter(f);
-					logger.addHandler(h);
-					logger.setLevel(Level.INFO);
-					logger.log(Level.INFO,"We're Logging!");
-					//Now the same thing below in Log configuration File
-			 */
-		
-			/*
-			 * //Log Configuration File
-			 * 	//log.properties	
-			 * 		java.util.logging.ConsoleHandler.level = ALL
-			 * 		java.util.logging.ConsoleHandler.formatter = java.util.logging.SimpleFormatter
-			 * 		com.pluralsight.handlers = java.util.logging.ConsoleHandler
-			 * 		com.pluralsight.level = ALL
-			 * 		java.util.logging.SimpleFormatter.format = %5$s,%2$s,%4$s%n
-			 * and launch it 
-			 * 		java -D java.util.logging.config.file=log.properties com.pluralsight.training.Main
-			 * 		and in application, just use
-			 * 		static Logger logger = Logger.getLogger("com.pluralsight");
-			 */
-		
-			/*
-			 * 	Logger Naming
-			 * 
-			 * 		///////////////////////////////////
-			 * 		package com.ps.training;
-			 * 		public class Main{
-			 * 			static Logger pkgLogger = Logger.getLogger("com.ps.training");
-			 * 			static Logger logger = Logger.getLogger("com.ps.training.Main");
-			 * 			psvm()
-			 * 		}
-			 * 		//////////////////////////////////
-			 * 		package com.ps.training;
-			 * 		public class Student{
-			 * 			static Logger logger = Logger.getLogger("com.ps.training.Student");
-			 * 			psvm()
-			 * 		}
-			 */
-		
-		/*
-		 * 	Logger Naming how to do!!!!!!
-		 * 		package com.ps.training;
-			 * 		public class Main{
-			 * 			static Logger pkgLogger = Logger.getLogger("com.ps.training");
-			 * 			static Logger logger = Logger.getLogger("com.ps.training.Main");
-			 * 			psvm(){
-			 * 				logger.entering("com.ps.training","Main"); -->not logged because it needs FINER
-			 * 				logger.log(Level.INFO,"We're Logging!"); -->gets logged because of parent
-			 * 				//we calling on child logger with only configured parent logger
-			 * 			}
-			 * 		}
-			 * 
-			 *	//the config file be
-			 *		com.ps.training.handlers=java.util.logging.ConsoleHandler
-			 *		com.ps.training.level=INFO
-			 *		//inorder to let entering work we do
-			 *			com.ps.training.Main.handlers=java.util.logging.FileHandler
-			 *			com.ps.training.Main.level=ALL
-		 */
 	}
 }
 

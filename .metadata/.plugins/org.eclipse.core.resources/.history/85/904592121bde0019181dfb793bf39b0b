@@ -169,29 +169,7 @@
  * 					^
  * 					|
  * 					|log
- * 			parents will log it too, but there would be a lot of duplicates so we can leverage it
- * 	Leveraging Logger Naming Hierarchy
- * 		Making the most of the Hierarchical system	
- * 			Focus on capturing important info
- * 				With the option to get details if needed
- * 			Manage setup primarily on parents
- * 			Manage log calls primarily at children
  * 
- * 			How can that actually work?????????????
- * 				Logging Hierarchy and Levels
- * 					Loggers do not require their to be level set
- * 						Log level can be null
- * 							Will inherit parent level
- * 						Primarily set level on parents
- * 							Normally somewhat restrictive level
- * 						Set more detail level on child if needed
- * 				Logging Hierarchy and Handlers
- * 					Loggers do not require handlers
- * 						A logger doesn't log if no handler
- * 							But does pass up to parent Logger
- * 						Primarily add Handlers to upper parents
- * 						Add Handlers to child if needed		
- * 					
  * 												
  */
 
@@ -269,27 +247,6 @@ public class AddLogComponents {
 			 * 			psvm()
 			 * 		}
 			 */
-		
-		/*
-		 * 	Logger Naming how to do!!!!!!
-		 * 		package com.ps.training;
-			 * 		public class Main{
-			 * 			static Logger pkgLogger = Logger.getLogger("com.ps.training");
-			 * 			static Logger logger = Logger.getLogger("com.ps.training.Main");
-			 * 			psvm(){
-			 * 				logger.entering("com.ps.training","Main"); -->not logged because it needs FINER
-			 * 				logger.log(Level.INFO,"We're Logging!"); -->gets logged because of parent
-			 * 				//we calling on child logger with only configured parent logger
-			 * 			}
-			 * 		}
-			 * 
-			 *	//the config file be
-			 *		com.ps.training.handlers=java.util.logging.ConsoleHandler
-			 *		com.ps.training.level=INFO
-			 *		//inorder to let entering work we do
-			 *			com.ps.training.Main.handlers=java.util.logging.FileHandler
-			 *			com.ps.training.Main.level=ALL
-		 */
 	}
 }
 
