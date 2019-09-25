@@ -1,0 +1,19 @@
+/*
+ * 	Process
+ * 		Instance of a program/application
+ * 		has resources such as memory,etc.
+ * 		Has at least one thread
+ * 
+ * 	Thread
+ * 		Sequence of programmed instructions
+ * 		The thing that executes a program's code
+ * 		Utilizes process resources
+ * 
+ *   
+ */
+
+package onlineCoaching.multithreadingAndConcurrency;
+
+public class Introduction {
+
+}
