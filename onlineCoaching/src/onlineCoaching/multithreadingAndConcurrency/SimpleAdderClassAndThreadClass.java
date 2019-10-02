@@ -46,7 +46,7 @@ public class SimpleAdderClassAndThreadClass {
 	}
 
 										*/
-
+										/*
 					//Adder with Threading support
 //Not that simple Simple Adder Class
 public class SimpleAdderClassAndThreadClass implements Runnable{
@@ -95,7 +95,7 @@ public class SimpleAdderClassAndThreadClass implements Runnable{
 		//main thread continues running as long as background threads have done their job
 	
 
-
+											*/
 
 
 

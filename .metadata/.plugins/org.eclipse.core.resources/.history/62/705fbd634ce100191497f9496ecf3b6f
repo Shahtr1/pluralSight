@@ -1,0 +1,71 @@
+/*
+ * 	Multithreading not always loosely coupled
+ * 		Caller may need results from worker
+ * 		May need to know if task succeeded
+ * 
+ */
+
+/*
+ * 	Thread Relationship Types
+ * 		Callable interface
+ * 			Represents a task to be run on a thread
+ * 				Can return results
+ * 				Can throw exceptions
+ * 			Only member is the call method
+ * 		
+ * 		Future interface
+ * 			Represents results a thread task
+ * 				Returned by ExecutorService.submit
+ * 			The key method is get
+ * 				Blocks until task completes
+ * 				Returns Callable interface
+ * 				Throws Callable interface exception
+ * 			
+ */
+
+package onlineCoaching.multithreadingAndConcurrency;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class CloserRelationshipThreadTasks {
+	//Adder Method Returning a Value
+	public int doAdd() throws IOException{
+		int total = 0;
+		String line = null;
+		
+		try(BufferedReader reader = Files.newBufferedReader(Paths.get(inFile))){
+			while((line = reader.readLine())!=null) {
+				total += Integer.parseInt(line);
+			}
+		}
+		return total;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

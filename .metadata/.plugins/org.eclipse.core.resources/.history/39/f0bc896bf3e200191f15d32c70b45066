@@ -1,0 +1,9 @@
+/*
+ * 
+ */
+
+package onlineCoaching.multithreadingAndConcurrency;
+
+public class ManualSynchronization {
+
+}

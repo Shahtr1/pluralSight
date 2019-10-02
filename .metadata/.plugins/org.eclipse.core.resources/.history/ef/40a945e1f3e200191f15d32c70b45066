@@ -1,0 +1,38 @@
+/*
+ * 	Synchronized Methods
+ * 		Automated concurrency management
+ * 		Used lock of current object instance
+ * 
+ * 	All Java objects have a lock
+ * 		Can manually acquire that lock
+ * 			Use synchronized statement block
+ * 			Available to any code with a reference
+ */
+
+package onlineCoaching.multithreadingAndConcurrency;
+
+public class ManualSynchronization {
+	public class BankAccount{
+		private int balance;
+		
+		public BankAccount(int startBalance) {
+			balance = startBalance;
+		}
+		
+		public int getBalance() {
+			return balance;
+		}
+		
+		public void deposit(int amount) {
+			balance += amount;
+		} //not thread-safe we have to do it explicitly
+	}
+}
+
+
+
+
+
+
+
+

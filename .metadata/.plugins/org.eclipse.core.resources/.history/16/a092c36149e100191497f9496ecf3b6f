@@ -1,0 +1,12 @@
+/*
+ *  Java offers thread pools
+ *  	Creates a queue for tasks
+ *  	Assigns tasks into a pool of threads
+ *  	Handles details of managing threads	
+ */
+
+package onlineCoaching.multithreadingAndConcurrency;
+
+public class ThreadPools {
+
+}
