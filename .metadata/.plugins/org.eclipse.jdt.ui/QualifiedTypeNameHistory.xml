@@ -46,4 +46,10 @@
     <fullyQualifiedTypeName name="java.util.concurrent.ExecutionException"/>
     <fullyQualifiedTypeName name="java.util.concurrent.ExecutorService"/>
     <fullyQualifiedTypeName name="java.util.concurrent.Executors"/>
+    <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.IntroReflection"/>
+    <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.BankAccount"/>
+    <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.HighVolumeAccount"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Modifier"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Field"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Method"/>
 </qualifiedTypeNameHistroy>
