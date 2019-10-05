@@ -136,14 +136,66 @@
  * 				Pass parameter types
  */
 
+/*
+ * 	Interacting with Object Instances
+ * 		Reflection not limited to describing types
+ * 		Can access and invoke members
+ */
+
+/*
+ * 	Instance Creation with Reflection
+ * 		Constructors can be executed
+ * 			Use Constructor newInstance method
+ * 			Returns a reference to a new instance
+ * 		Simplified handling for no-arg constructor
+ * 			No need to access constructor directly
+ * 			Use Class newInstance method
+ * 		
+ * 		Flexible work dispatch system
+ * 			Executes worker classes against targets
+ * 			Can use any worker in classpath
+ * 		Method to start work accepts 2 args
+ * 			Name of worker type
+ * 				Received as a String reference
+ * 			Target of work
+ * 				Received as Object reference
+ * 		Worker type requirements
+ * 			Constructor that accepts target type
+ * 			A doWork method that takes no args	
+ */
+
+/*
+ * 	Update flexible work dispatch system
+ * 		Core requirements same as before
+ * 	Method to start work
+ * 		Accepts same 2 args as before
+ * 
+ * 	Worker type requirements
+ * 		Has a no-arg constructor
+ * 		Implements TaskWorker interface	
+ */
+
 package onlineCoaching.RuntimeInfoAndReflection;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.logging.Logger;
+
+import onlineCoaching.multithreadingAndConcurrency.BankAccount;
+
+ interface TaskWorker{
+	 void setTarget(Object target);
+	 void doWork();
+ }
 
 public class IntroReflection {
-	public static void main(String[] args) throws ClassNotFoundException {
+	
+	static Logger logger = Logger.getLogger("onlineCoaching.RuntimeInfoAndReflection");
+	
+	public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 		BankAccount bak1 = new BankAccount("1");
 		BankAccount bak2 = new BankAccount("2", 500);
 		doWork(bak1);
@@ -174,7 +226,32 @@ public class IntroReflection {
 		
 		methodInfo2(hBak1);
 		System.out.println();
+		
+		callGetId(bak1);
+		System.out.println();
+		
+		callDeposit(bak2, 50);
+		System.out.println();
+		
+		startWork("onlineCoaching.RuntimeInfoAndReflection.AccountWorker",bak2);
+		System.out.println();
+		
+		startWork2("onlineCoaching.RuntimeInfoAndReflection.AccountWorker",bak2);
+		System.out.println();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	static void methodInfo2(Object obj) {
 		Class<?> theClass = obj.getClass();
 		Method[] methods = theClass.getMethods();
@@ -187,7 +264,7 @@ public class IntroReflection {
 	static void displayMethods2(Method[] arr) {
 		for(Method f:arr) {
 			if(f.getDeclaringClass() != Object.class)
-				System.out.println(f.getName());
+				logger.info(f.getName());
 		}
 	}
 	
@@ -203,7 +280,7 @@ public class IntroReflection {
 	
 	static void displayMethods(Method[] arr) {
 		for(Method f:arr) {
-			System.out.println(f.getName());
+			logger.info(f.getName());
 		}
 	}
 	
@@ -219,7 +296,7 @@ public class IntroReflection {
 	
 	static void displayFields(Field[] arr) {
 		for(Field f:arr) {
-			System.out.println(f.getName()+" : "+f.getType());
+			logger.info(f.getName()+" : "+f.getType());
 		}
 	}
 	
@@ -229,59 +306,98 @@ public class IntroReflection {
 	}
 	
 	static void showName(Class<?> theClass) {
-		System.out.println(theClass.getSimpleName());
+		logger.info(theClass.getSimpleName());
 	}
 	
 	static void classInfo(Object obj) {
 		Class<?> theClass = obj.getClass();
-		System.out.println(theClass.getSimpleName());
+		logger.info(theClass.getSimpleName());
 		
 		Class<?> superClass = theClass.getSuperclass();
-		System.out.println(theClass.getSuperclass());
+		logger.info(""+theClass.getSuperclass());
 		
 		Class<?> superClass2 = superClass.getSuperclass();
-		System.out.println(superClass.getSuperclass());
+		logger.info(""+superClass.getSuperclass());
 		
-		System.out.println(theClass.getSimpleName());
+		logger.info(theClass.getSimpleName());
 		
 		Class<?>[] interfaces = theClass.getInterfaces();
 		for(Class<?> ifc :interfaces) {
-			System.out.println(ifc.getSimpleName());
+			logger.info(ifc.getSimpleName());
 		}
-		//there's is a method of Class class isInterface() to handle interface	
+		//there's is a method of Class class isInterface() to handle interface
 	}
 	
 	static void typeModifiers(Object obj) {
 		Class<?> theClass = obj.getClass();
 		int modifiers = theClass.getModifiers();
 		if((modifiers & Modifier.FINAL)>0) {
-			System.out.println("bitwise check - final");
+			logger.info("bitwise check - final");
 		}
 		//or without bitwise op's
 		if(Modifier.isFinal(modifiers))
-			System.out.println("method check - final");
+			logger.info("method check - final");
 		if(Modifier.isPrivate(modifiers))
-			System.out.println("method check - private");
+			logger.info("method check - private");
 		if(Modifier.isProtected(modifiers))
-			System.out.println("method check - protected");
+			logger.info("method check - protected");
 		if(Modifier.isPublic(modifiers))
-			System.out.println("method check - public");
+			logger.info("method check - public");
 	}
 
+	//Method Access with Reflection
+	static void callGetId(Object obj) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Class<?> theClass = obj.getClass();
+		Method m = theClass.getMethod("getId");
+		Object result = m.invoke(obj);
+		logger.info("Result: " + result);
+	}
 	
+	//Method Access with Reflection
+	static void callDeposit(Object obj,int amt) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+			Class<?> theClass = obj.getClass();
+			Method m = theClass.getMethod("deposit",int.class);
+			m.invoke(obj,amt);
+			Method m1 = theClass.getMethod("getBalance");
+			Object result = m1.invoke(obj);
+			logger.info("Result: " + result);
+		}
+
+	static void startWork(String workerTypeName,Object workerTarget) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Class<?> workerType = Class.forName(workerTypeName);
+		logger.info(workerType.getSimpleName());
+		Class<?> targetType = workerTarget.getClass();
+		logger.info(targetType.getSimpleName());
+		Constructor c = workerType.getConstructor(targetType);
+		logger.info(c.getName());
+		Object worker = c.newInstance(workerTarget);
+		logger.info(worker.toString());
+		Method doWork = workerType.getMethod("doWork");
+		doWork.invoke(worker);
+	}
+	
+	static void startWork2(String workerTypeName,Object workerTarget) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Class<?> workerType = Class.forName(workerTypeName);
+		logger.info(workerType.getSimpleName());
+		TaskWorker worker = (TaskWorker)workerType.newInstance();
+		worker.setTarget(workerTarget);
+		worker.doWork();
+	}
 }
 
 class BankAccount{
 	private String id;
 	private int balance = 0;
 	
+	static Logger logger = Logger.getLogger("onlineCoaching.RuntimeInfoAndReflection");
+	
 	 BankAccount(String id) {
 		this.id=id;
 	}
 	
 	 BankAccount(String id,int startBalance) {
-		balance = startBalance;
-		id = "hi";
+		this.balance = startBalance;
+		this.id = id;
 	}
 	
 	public String getId() {
@@ -324,6 +440,83 @@ final class HighVolumeAccount extends BankAccount implements Runnable{
 		}
 		
 	}
+	
+}
+
+class AccountWorker implements Runnable{
+	static Logger logger = Logger.getLogger("onlineCoaching.RuntimeInfoAndReflection");
+	BankAccount ba;
+	HighVolumeAccount hva;
+	public AccountWorker(BankAccount ba){
+		this.ba=ba;
+	}
+	public AccountWorker(HighVolumeAccount hva) {
+		this.hva=hva;
+	}
+	
+	public void doWork() {
+//		Thread t = new Thread(hva != null ? hva : this);
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
+	@Override
+	public void run() {
+		char txType = 'w';//read tx type;
+		int amt = 200;//read tx amount
+		if(txType == 'w') {
+			ba.withdrawal(amt);
+			logger.info(""+ba.getBalance());
+		}	
+		else {
+			logger.info(""+amt);
+			ba.deposit(amt);
+			logger.info(""+ba.getBalance());
+		}
+			
+		
+	}	
+	
+	
+}
+
+class AccountWorker1 implements Runnable,TaskWorker{
+
+	static Logger logger = Logger.getLogger("onlineCoaching.RuntimeInfoAndReflection");
+	BankAccount ba;
+	
+	@Override
+	public void setTarget(Object target) {
+		if(BankAccount.class.isInstance(target)) {
+			ba = (BankAccount)target;
+		}else
+			throw new IllegalArgumentException();
+		
+	}
+
+	@Override
+	public void doWork() {
+//		Thread t = new Thread(Runnable.class.isInstance(ba)?(Runnable)ba:this);
+		
+	}
+
+	@Override
+	public void run() {
+		char txType = 'w';//read tx type;
+		int amt = 200;//read tx amount
+		if(txType == 'w') {
+			ba.withdrawal(amt);
+			logger.info(""+ba.getBalance());
+		}	
+		else {
+			logger.info(""+amt);
+			ba.deposit(amt);
+			logger.info(""+ba.getBalance());
+		}
+		
+	}
+	
+	//NOTE: see startWork2 for this
 	
 }
 

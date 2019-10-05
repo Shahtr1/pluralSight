@@ -47,9 +47,13 @@
     <fullyQualifiedTypeName name="java.util.concurrent.ExecutorService"/>
     <fullyQualifiedTypeName name="java.util.concurrent.Executors"/>
     <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.IntroReflection"/>
-    <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.BankAccount"/>
-    <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.HighVolumeAccount"/>
     <fullyQualifiedTypeName name="java.lang.reflect.Modifier"/>
     <fullyQualifiedTypeName name="java.lang.reflect.Field"/>
     <fullyQualifiedTypeName name="java.lang.reflect.Method"/>
+    <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.AccountWorker"/>
+    <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.BankAccount"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Constructor"/>
+    <fullyQualifiedTypeName name="onlineCoaching.multithreadingAndConcurrency.BankAccount"/>
+    <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
+    <fullyQualifiedTypeName name="onlineCoaching.RuntimeInfoAndReflection.HighVolumeAccount"/>
 </qualifiedTypeNameHistroy>

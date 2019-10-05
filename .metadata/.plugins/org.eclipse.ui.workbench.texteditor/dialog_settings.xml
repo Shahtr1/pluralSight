@@ -6,11 +6,13 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="ClassLoadingAndEnvInfo"/>
+		<item key="selection" value="logger.info"/>
 		<list key="findhistory">
+			<item value="System.out.println"/>
 			<item value="ClassLoading"/>
 		</list>
 		<list key="replacehistory">
+			<item value="logger.info"/>
 			<item value="ClassLoadingAndEnvInfo"/>
 		</list>
 	</section>
