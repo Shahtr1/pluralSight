@@ -184,7 +184,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.logging.Logger;
 
-import onlineCoaching.multithreadingAndConcurrency.BankAccount;
+
 
  interface TaskWorker{
 	 void setTarget(Object target);
@@ -496,8 +496,8 @@ class AccountWorker1 implements Runnable,TaskWorker{
 
 	@Override
 	public void doWork() {
-//		Thread t = new Thread(Runnable.class.isInstance(ba)?(Runnable)ba:this);
-		
+		Thread t = new Thread(HighVolumeAccount.class.isInstance(ba)?(HighVolumeAccount)ba:this);
+		t.start();
 	}
 
 	@Override

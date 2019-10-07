@@ -1,0 +1,19 @@
+/*
+ * 	The Need to Express Context and Intent
+ * 		Type system solves much of this issue
+ * 		But standard type system isn't quite enough
+ * 
+ */
+
+/*
+ * 	Annotations in code
+ * 		Name always preceded by @ when used
+ * 		Placed directly before target
+ * 		Allowable targets vary with annotation
+ */
+
+package onlineCoaching.metadataWithAnnotations;
+
+public class Introduction {
+	//Type Expressing Intent
+}
