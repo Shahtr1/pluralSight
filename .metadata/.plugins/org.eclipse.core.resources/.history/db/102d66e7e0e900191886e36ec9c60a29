@@ -1,0 +1,120 @@
+/*
+ * 	Java has built-in ability to persist objects
+ * 		Store from runtime into a byte stream
+ * 		Restore from byte stream into runtime
+ * 
+ * 	Leverages reflection
+ * 
+ * 	Opens up many possibilities
+ * 		Save to file system
+ * 		Save in a database
+ * 			RDBMS can store as blob
+ * 			OODBMS can often store directly
+ * 		Pass across memory address boundaries
+ * 		Pass over network
+ */
+
+/*
+ * 	Serialization
+ * 		Serializing
+ * 			Storing an object-graph to a byte stream
+ * 		Deserializing
+ * 			Restoring an object-graph from a byte stream 
+ * 		
+ */
+
+/*
+ * 	Serialization Types
+ * 		Serializable
+ * 			Implemented by serializable types
+ * 			Indicates that type supports serialization
+ * 			Has no methods
+ * 		ObjectOutputStream
+ * 			Serializes object-graph to stream
+ * 		ObjectInputStream
+ * 			Deserializes stream to object-graph
+ */
+
+/*
+ * 	Being Serializable
+ * 		Requirements to be serializable
+ * 			Implement Serializable
+ * 			Members are serializable
+ * 				Primitive types are serializable
+ * 				Others must implement Serializable
+ */
+
+
+
+package onlineCoaching.Serialization;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Logger;
+
+public class PersistingObjects {
+	public static void main(String[] args) throws IOException {
+		BankAccount bak1 = new BankAccount("1234",500);
+		bak1.deposit(250); 
+		saveAccount(bak1,"account.dat");
+	}
+	
+	static void saveAccount(BankAccount ba,String fileName) throws IOException {
+		ObjectOutputStream objStream = new ObjectOutputStream(Files.newOutputStream(Paths.get(fileName)));
+		objStream.writeObject(ba);
+	}
+	
+	static BankAccount loadAccount(String fileName) {
+		BankAccount ba = null;
+		
+	}
+}
+
+class BankAccount implements Serializable{
+	//String class implements serializable
+	private final String id;
+	private int balance = 0;
+	
+	static Logger logger = Logger.getLogger("onlineCoaching.metadataWithAnnotations");
+	
+	 BankAccount(String id) {
+		this.id=id;
+	}
+	
+	 BankAccount(String id,int startBalance) {
+		this.balance = startBalance;
+		this.id = id;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	
+	public int getBalance() {
+		return balance;
+	}
+	
+	public void deposit(int amount) {
+		balance += amount;
+	}
+	
+	public void withdrawal(int amount) {
+		balance -= amount;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

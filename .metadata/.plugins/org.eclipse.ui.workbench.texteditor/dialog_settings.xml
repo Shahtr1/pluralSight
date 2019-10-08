@@ -6,12 +6,18 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="logger.info"/>
+		<item key="selection" value="HighVolumeAccount1"/>
 		<list key="findhistory">
+			<item value="HighVolumeAccount"/>
+			<item value="TaskWorker"/>
+			<item value="BankAccount"/>
 			<item value="System.out.println"/>
 			<item value="ClassLoading"/>
 		</list>
 		<list key="replacehistory">
+			<item value="HighVolumeAccount1"/>
+			<item value="TaskWorker1"/>
+			<item value="BankAccount1"/>
 			<item value="logger.info"/>
 			<item value="ClassLoadingAndEnvInfo"/>
 		</list>

@@ -1,0 +1,9 @@
+/*
+ * 	
+ */
+
+package onlineCoaching.Serialization;
+
+public class PersistingObjects {
+
+}
