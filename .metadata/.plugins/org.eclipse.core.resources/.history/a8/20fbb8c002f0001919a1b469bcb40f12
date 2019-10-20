@@ -1,0 +1,37 @@
+/*
+ * 							Collection							|		
+ * 								 								|
+ * 			List				Set				Queue			|	Map	
+ * 	     (ArrayList)		  (HashSet)		(PriorityQueue)		| (HashMap)					
+ * 		 (LinkedList)			  |					|			|	  |
+ * 							  SortedSet			  Deque			| SortedMap
+ * 							  (TreeSet)		   (LinkedList)		| (TreeMap)
+ * 											   (ArrayDeque)		|
+ */
+
+/*
+ * 			Interfaces							Implementation
+ * 		Multiple Data Structures				Specific Data Structure
+ * 		Functional Characteristics				Performance Characteristics
+ * 		Prefer as a variable type				Concrete and Instantiable
+ * 		Often has a popular implementation
+ */
+
+/*
+ * 
+ */
+
+package onlineCoaching.course2.collectionsIntro;
+
+public class CollectionOfCollections {
+	
+}
+
+
+
+
+
+
+
+
+

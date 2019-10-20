@@ -1,0 +1,5 @@
+package onlineCoaching.course2.collections;
+
+public class ListInterface {
+
+}

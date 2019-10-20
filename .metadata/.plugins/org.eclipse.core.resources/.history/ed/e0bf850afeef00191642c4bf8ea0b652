@@ -1,0 +1,13 @@
+/*
+ * 										Collection
+ * 
+ * 						List				Set				Queue
+ * 										  SortedSet		   Dequeue
+ * 
+ */
+
+package onlineCoaching.course2.collectionsIntro;
+
+public class CollectionOfCollections {
+
+}
