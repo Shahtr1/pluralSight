@@ -1,0 +1,13 @@
+/*
+ * 	Lists are collections with iteration order
+ * 	each element has index which says where there position is
+ * 	
+ */
+
+package onlineCoaching.course2.collections;
+
+public class ListInterface {
+	public static void main(String[] args) {
+		
+	}
+}

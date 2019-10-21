@@ -25,9 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ListInterface {
-	public static void main(String[] args) throws Exception {
-		ShipmentTest test = new ShipmentTest();
-		test.shouldAddItems();
+	public static void main(String[] args) {
+		
 	}
 }
 
@@ -35,16 +34,16 @@ class ShipmentTest{
 	private Shipment shipment = new Shipment();
 	
 	public void shouldAddItems() throws Exception{
-		shipment.add(ProductFixtures.door);
-		shipment.add(ProductFixtures.window);
+		shipment.add(door);
+		shipment.add(window);
 		
 	}
 	
 	public void shouldReplaceItems()throws Exception{
-		shipment.add(ProductFixtures.door);
-		shipment.add(ProductFixtures.window);
+		shipment.add(door);
+		shipment.add(window);
 		
-		shipment.replace(ProductFixtures.door,ProductFixtures.floorPanel);
+		shipment.replace(door,floorPanel);
 	}
 }
 
@@ -71,19 +70,11 @@ class Shipment implements Iterable<Product>{
 	public void prepare() {
 		
 	}
-	
-	public List<Product> getHeavyVanProducts(){
-		return null;
-	}
-	
-	public List<Product> getLightVanProducts(){
-		return null;
-	}
 
 	@Override
 	public Iterator<Product> iterator() {
-		
-		return products.iterator();
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
