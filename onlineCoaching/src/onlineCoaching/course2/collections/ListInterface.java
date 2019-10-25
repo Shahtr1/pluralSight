@@ -20,31 +20,62 @@
 
 package onlineCoaching.course2.collections;
 
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.contains;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Test;
+
 public class ListInterface {
 	public static void main(String[] args) throws Exception {
 		ShipmentTest test = new ShipmentTest();
-		test.shouldAddItems();
+		//test.shouldAddItems();
+//		test.shouldReplaceItems();
+		test.shouldNotReplaceMissingItems();
 	}
 }
 
 class ShipmentTest{
 	private Shipment shipment = new Shipment();
 	
+	@Test
 	public void shouldAddItems() throws Exception{
 		shipment.add(ProductFixtures.door);
 		shipment.add(ProductFixtures.window);
 		
+		assertThat(shipment, contains(ProductFixtures.door,ProductFixtures.window));
 	}
 	
+	@Test
 	public void shouldReplaceItems()throws Exception{
 		shipment.add(ProductFixtures.door);
 		shipment.add(ProductFixtures.window);
 		
 		shipment.replace(ProductFixtures.door,ProductFixtures.floorPanel);
+		assertThat(shipment,contains(ProductFixtures.floorPanel,ProductFixtures.window));
+	}
+	
+	@Test
+	public void shouldNotReplaceMissingItems() {
+		shipment.add(ProductFixtures.window);
+		shipment.replace(ProductFixtures.door, ProductFixtures.floorPanel);
+		assertThat(shipment,contains(ProductFixtures.window));
+	}
+	
+	@Test
+	public void shouldIdentifyVanRequirements() {
+		shipment.add(ProductFixtures.door);
+		shipment.add(ProductFixtures.floorPanel);
+		shipment.add(ProductFixtures.window);
+		
+		shipment.prepare();
+		
+		assertThat(shipment.getLightVanProducts(),contains(ProductFixtures.window));
+		assertThat(shipment.getHeavyVanProducts(),contains(ProductFixtures.floorPanel,ProductFixtures.door));
+		
 	}
 }
 
@@ -57,6 +88,7 @@ class ProductFixtures{
 class Shipment implements Iterable<Product>{
 	
 	private static final int LIGHT_VAN_MAX_WEIGHT = 20;
+	private static final int PRODUCT_NOT_PRESENT = -1;
 	
 	private final List<Product> products = new ArrayList<>();
 	
@@ -65,7 +97,9 @@ class Shipment implements Iterable<Product>{
 	}
 	
 	public void replace(Product oldProduct,Product newProduct) {
-		
+		final int index =  products.indexOf(oldProduct);
+		if(index != PRODUCT_NOT_PRESENT)
+			products.set(index, newProduct);
 	}
 	
 	public void prepare() {
