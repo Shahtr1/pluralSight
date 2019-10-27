@@ -18,4 +18,13 @@
     <fullyQualifiedTypeName name="onlineCoaching.course2.collections.Product"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ProductCatalogue"/>
     <fullyQualifiedTypeName name="java.util.SortedSet"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.HelpDesk.Customer"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.HelpDesk"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.Customer"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.Category"/>
+    <fullyQualifiedTypeName name="java.util.Queue"/>
+    <fullyQualifiedTypeName name="java.util.ArrayDeque"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.Enquiry"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.CategorisedHelpDesk"/>
+    <fullyQualifiedTypeName name="java.util.function.Predicate"/>
 </qualifiedTypeNameHistroy>
