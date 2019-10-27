@@ -58,7 +58,9 @@ package onlineCoaching.course2.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class CollectionOfCollections {
 	public static void main(String[] args) {
@@ -129,6 +131,19 @@ public class CollectionOfCollections {
 }
 
 class Product{
+	//for java less than 8
+//	public static final Comparator<Product> BY_WEIGHT = new Comparator<Product>() {
+//		public int compare(final Product p1,final Product p2) {
+//			return Integer.compare(p1.getWeight(),p2.getWeight());
+//		}
+//	};
+	
+	//for java 8
+	//comparing from the Comparable interface
+	public static final Comparator<Product> BY_WEIGHT = Comparator.comparing(Product::getWeight);
+	
+	public static final Comparator<Product> BY_NAME = Comparator.comparing(Product::getName);
+
 	private final String name;
 	private final int weight;
 	
@@ -149,6 +164,40 @@ class Product{
 	public String toString() {
 		return "Product{"+"name="+name+",weight="+weight+'}';
 	}
+
+	@Override
+	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((name == null) ? 0 : name.hashCode());
+//		result = prime * result + weight;
+//		return result;
+		
+		//Java 7 introduced a class called Objects
+		return Objects.hash(name,weight);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+//		if (name == null) {
+//			if (other.name != null)
+//				return false;
+//		} else if (!name.equals(other.name))
+//			return false;
+//		if (weight != other.weight)
+//			return false;
+//		return true;
+		return Objects.equals(name, other.name);
+	}
+	
+	
 }
 
 

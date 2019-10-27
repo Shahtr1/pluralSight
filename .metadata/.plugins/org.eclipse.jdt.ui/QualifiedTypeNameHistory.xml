@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="java.util.Comparator"/>
+    <fullyQualifiedTypeName name="org.junit.Test"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ListInterface"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.SetsCollection"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ProductCatalogueTest"/>
+    <fullyQualifiedTypeName name="java.awt.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.Shipment"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ProductFixtures"/>
+    <fullyQualifiedTypeName name="java.util.Objects"/>
+    <fullyQualifiedTypeName name="java.util.TreeSet"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.Product"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ProductCatalogue"/>
+    <fullyQualifiedTypeName name="java.util.SortedSet"/>
+</qualifiedTypeNameHistroy>
