@@ -144,8 +144,15 @@ class Product{
 	
 	public static final Comparator<Product> BY_NAME = Comparator.comparing(Product::getName);
 
+	private int id;
 	private final String name;
 	private final int weight;
+	
+	public Product(int id,String name,int weight) {
+		this.name = name;
+		this.weight = weight;
+		this.id=id;
+	}
 	
 	public Product(String name,int weight) {
 		this.name = name;
@@ -195,6 +202,10 @@ class Product{
 //			return false;
 //		return true;
 		return Objects.equals(name, other.name);
+	}
+
+	public int getId() {
+		return id;
 	}
 	
 	
