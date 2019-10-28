@@ -19,6 +19,71 @@
  * 			
  */
 
+/*
+ * 	Priority Queues
+ * 		Highest Priority Out
+ * 		Priority really just defines ordering
+ * 	
+ */
+
+/*
+ * 	Stacks
+ * 	Last In, First Out
+ * 		But Stack implementation is deprecated in Java, Why?
+ * 			The original implementation of java.util.Stack was not very good, it synchronized all of its methods, to be thread safe
+ * 			when many uses of stacks don't need thread safety.
+ * 		Java introduces Deques(Double Ended Queues)
+ */
+
+/*
+ *  Deque(Double Ended Queue)
+ *  	Correct way to use stacks
+ *  	can add or remove from both ends
+ *  	Deque Interface extends the Queue interface
+ *  
+ *  	Adding elements
+ *  		boolean offerFirst(E e)
+ *  		boolean offerLast(E e)
+ *  		void addFirst(E e)
+ *  		void addLast(E e)
+ *  	
+ *  		offer (returns false if the queue is full)
+ *  		add(inherited from Collection,throws an exception if the queue is full)  	  	
+ *  		
+ *  	Removing and returning the element
+ *  		E removeFirst()
+ *  		E removeLast()
+ *  		E pollFirst()
+ *  		E pollLast()
+ *  		
+ *  		remove throws Exception when empty, poll returns null
+ *  
+ *  	Read without removing
+ *  		E getFirst()
+ *  		E getLast()
+ *  		E peekFirst()
+ *  		E peekLast()
+ *  
+ *  		get throws Exception when empty , peek returns null
+ *  
+ *  	Semantic naming for Stacks/LIFO
+ *  		void push(E e)
+ *  		E pop()
+ */
+
+/*
+ * 	Implementations of Queue
+ * 							Comparison Layout
+ * 		ArrayDeque									LinkedList
+ * 	RingBuffer based implementation				Previously discussed in Lists
+ * 	Constant time addition/removal				Very seldom used as a Queue
+ * 	Less Memory,Faster							Has random access!
+ * 													- But its O(N)
+ * 	No random access							Allows null elements(bad)
+ * 
+ * 					prefer ArrayDeque than LinkedList	
+ */
+
 
 
 package onlineCoaching.course2.collections;
@@ -26,6 +91,8 @@ package onlineCoaching.course2.collections;
 import static onlineCoaching.course2.collections.Category.PRINTER;
 
 import java.util.ArrayDeque;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.function.Predicate;
 
@@ -37,13 +104,21 @@ public class QueuesDequeAndStacks {
 //		
 //		h.processAllEnqueries();
 		
-		CategorisedHelpDesk h = new CategorisedHelpDesk();
-		h.enquire(Customer.JACK, Category.PHONE);
-		h.enquire(Customer.JILL, Category.PRINTER);
+//		CategorisedHelpDesk h = new CategorisedHelpDesk();
+//		h.enquire(Customer.JACK, Category.PHONE);
+//		h.enquire(Customer.JILL, Category.PRINTER);
+//		
+//		h.processPrinterEnquiry();
+//		h.processGeneralEnquiry();
+//		h.processPrinterEnquiry();
 		
-		h.processPrinterEnquiry();
-		h.processGeneralEnquiry();
-		h.processPrinterEnquiry();
+		
+//		PriorityHelpDesk p = new PriorityHelpDesk();
+//		p.enquire(Customer.JACK, Category.PHONE);
+//		p.enquire(Customer.JILL, Category.PRINTER);
+//		p.enquire(Customer.MARY, Category.COMPUTER);
+//		
+//		p.processAllEnqueries();
 	}
 }
 
@@ -161,6 +236,32 @@ class CategorisedHelpDesk{
 	}	
 	
 	
+}
+
+class PriorityHelpDesk{
+	
+//	private static final Comparator<Enquiry> By_CATEGORY = Comparator.comparing(Enquiry::getCategory);
+	
+	private static final Comparator<Enquiry> By_CATEGORY = new Comparator<Enquiry>() {
+		public int compare(final Enquiry o1,final Enquiry o2) {
+			return o1.getCategory().compareTo(o2.getCategory());
+		}
+	};
+	
+	//we rely on the fact that there is a compareTo method on the enum that is implemented by every enum class. So we will just have the ordering of the values in the enum's order 
+	
+	private final Queue<Enquiry> enquiries = new PriorityQueue<>(By_CATEGORY);//a comparator based constructor
+	
+	public void enquire(final Customer customer,final Category type) {
+		enquiries.offer(new Enquiry(customer, type));
+	}
+	
+	public void processAllEnqueries() {
+			Enquiry enquiry;
+			while((enquiry = enquiries.poll()) != null) {
+				enquiry.getCustomer().reply("Have you tried turning it off and on again?");
+			}
+	}
 }
 
 
