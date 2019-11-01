@@ -22,7 +22,7 @@
  * 			E higher(E e);
  * 			E floor(E e);
  * 			E ceiling(E e);
- * 			E pollongFirst();
+ * 			E pollFirst();
  * 			E pollLast();
  */
 
