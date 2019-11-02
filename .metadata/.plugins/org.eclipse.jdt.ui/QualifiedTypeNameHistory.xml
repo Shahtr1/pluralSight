@@ -21,7 +21,6 @@
     <fullyQualifiedTypeName name="onlineCoaching.course2.collections.Category"/>
     <fullyQualifiedTypeName name="java.util.Comparator"/>
     <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
-    <fullyQualifiedTypeName name="org.junit.Test"/>
     <fullyQualifiedTypeName name="java.util.ArrayDeque"/>
     <fullyQualifiedTypeName name="java.util.Deque"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.collections.CalculatorTest"/>
@@ -40,4 +39,6 @@
     <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ProductFixtures"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="org.junit.Test"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.generics.CircularBuffer"/>
 </qualifiedTypeNameHistroy>
