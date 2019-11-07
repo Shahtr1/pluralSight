@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.util.HashSet"/>
-    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ListInterface"/>
-    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.SetsCollection"/>
-    <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ProductCatalogueTest"/>
-    <fullyQualifiedTypeName name="java.awt.List"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.collections.Shipment"/>
     <fullyQualifiedTypeName name="java.util.TreeSet"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.collections.ProductCatalogue"/>
@@ -36,20 +31,16 @@
     <fullyQualifiedTypeName name="java.util.Collections"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.generics.CircularBuffer"/>
     <fullyQualifiedTypeName name="java.util.Objects"/>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.generics.AgeComparator"/>
     <fullyQualifiedTypeName name="com.sun.org.apache.xpath.internal.operations.Minus"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.generics.SortingExamples.Minimizer"/>
     <fullyQualifiedTypeName name="java.util.Comparator"/>
-    <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.generics.PersonLoader"/>
     <fullyQualifiedTypeName name="java.io.RandomAccessFile"/>
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="org.junit.Test"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.generics.Employee"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.generics.Person"/>
-    <fullyQualifiedTypeName name="java.lang.reflect.Constructor"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="java.lang.NoSuchMethodException"/>
     <fullyQualifiedTypeName name="java.lang.reflect.InvocationTargetException"/>
@@ -57,7 +48,16 @@
     <fullyQualifiedTypeName name="java.lang.ClassNotFoundException"/>
     <fullyQualifiedTypeName name="java.util.Iterator"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.generics.UncompilableException"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="onlineCoaching.course2.generics.CustomArrayList"/>
     <fullyQualifiedTypeName name="java.util.AbstractList"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.generics.classLiterals.Injector"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.generics.classLiterals.Logger"/>
+    <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Constructor"/>
+    <fullyQualifiedTypeName name="onlineCoaching.course2.generics.reflecting_types.NonRefiableTypes"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.TypeVariable"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.ParameterizedType"/>
 </qualifiedTypeNameHistroy>
