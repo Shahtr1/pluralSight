@@ -50,11 +50,11 @@ private final RandomAccessFile file;
 //			return null;
 //		}
 //	}
-	// so use <T extends Person> when you want to restrict your class abd declare it, and want the value back 
+	// so use <T extends Person> when you want to restrict your class and declare it, and want the value back 
 	// use <? extends Person> for a parameter on a method
 	
 	
-	//Lower Bounded Wildcards
+	
 	
 }
 
