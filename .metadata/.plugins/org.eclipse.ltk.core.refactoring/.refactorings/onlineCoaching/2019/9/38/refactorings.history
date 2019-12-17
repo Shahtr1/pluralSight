@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;onlineCoaching.logSystem.Intro&apos; to &apos;IntroAndLogger&apos;&#x0D;&#x0A;- Original project: &apos;onlineCoaching&apos;&#x0D;&#x0A;- Original element: &apos;onlineCoaching.logSystem.Intro&apos;&#x0D;&#x0A;- Renamed element: &apos;onlineCoaching.logSystem.IntroAndLogger&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Intro&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;onlineCoaching.logSystem{Intro.java[Intro" matchStrategy="1" name="IntroAndLogger" qualified="false" references="true" similarDeclarations="false" stamp="1568557326637" textual="true" version="1.0"/>
-</session>

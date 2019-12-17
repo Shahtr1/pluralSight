@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename compilation unit &apos;onlineCoaching.multithreadingAndConcurrency.SimpleAdderClassNotMuchSimple.java&apos; to &apos;SimpleAdderClassAndThreadClass.java&apos;&#x0D;&#x0A;- Original project: &apos;onlineCoaching&apos;&#x0D;&#x0A;- Original element: &apos;onlineCoaching.multithreadingAndConcurrency.SimpleAdderClassNotMuchSimple.java&apos;&#x0D;&#x0A;- Renamed element: &apos;onlineCoaching.multithreadingAndConcurrency.SimpleAdderClassAndThreadClass.java&apos;" description="Rename compilation unit &apos;SimpleAdderClassNotMuchSimple.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;onlineCoaching.multithreadingAndConcurrency{SimpleAdderClassNotMuchSimple.java" name="SimpleAdderClassAndThreadClass.java" references="false" stamp="1569429369986" version="1.0"/>
-</session>
