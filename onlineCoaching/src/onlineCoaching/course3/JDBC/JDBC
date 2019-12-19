@@ -28,10 +28,26 @@ Two Interfaces which encapsulates the data returned from the database
 				get method for each data type
 				Each get method has two versions
 					One that takes in a column name
-					One that takes in a column index
+					One that takes in a column index value
 				
 			Update Methods
-			
+				allows modification to data in a table through the ResultSet
+				Each update method has two versions
+					One that takes in a column name
+					One that takes in a column index value
+					
+					public void updateString(int columnIndex,String s)
+					public void updateString(String columnName,String s)
+					
+					rs.updateString("First_Name","Shekhar");
+						Changes the column of the current row in the ResultSet object,but not in the underlying database
+						To update the changes in the database we need to invoke one of the following methods:
+							updateRow()
+							deleteRow()
+							refreshRow()
+							cancelRowUpdate()
+							insertRow()
+						
 		
 		
 	
@@ -57,3 +73,32 @@ Steps for Development Process
 	Create Statement Object
 	Execute SQL query
 	Process the ResultSet
+	
+	Understanding PreparedStatement
+		A PreparedStatement interface is a sub interface of Statement
+		
+		PreparedStatement pstmt = myConn.createStatement("select * from employees where salary < ? and department_id = ?");
+		
+		To Bind: setXxx() method where Xxx represents the java datatypes of the value
+		
+		ForExample: setInt(P1,P2)
+					setString(P1,P2)		//P1: Position(1 Based) P2: Value
+					setDouble(P1,P2)
+		
+		To Set:
+			pstmt.setDouble(1,10000);
+			pstmt.setInt(2,50);	
+			
+		Steps for working with PreparedStatement
+			1. Establish a Connection with a Database
+			2. Prepare the Statement using Parameter placeholder(?)
+			3. Set the values for Parameters otherwise SQLException will be thrown
+			4. Execute the Statement		
+		
+			
+	
+	
+	
+	
+	
+	
