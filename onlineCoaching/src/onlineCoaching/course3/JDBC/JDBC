@@ -95,6 +95,111 @@ Steps for Development Process
 			3. Set the values for Parameters otherwise SQLException will be thrown
 			4. Execute the Statement		
 		
+	
+				Understanding CallableStatements
+	
+A Stored Procedure is a group of SQL Statements that perform a particular task
+	Stored Procedures created by DBA
+	Every Database has its own language for creating Stored Procedures
+	
+	MySQL uses Stored Procedure Language
+	ORACLE uses PL/SQL(Procedural language extensions to the Structured Query Language)
+	Microsoft SQL Server uses Transact SQL or TSQL
+	
+	CallableStatements are used to make a call to the Stored Procedures
+	
+	CallableStatement cstmt = conn.prepareCall(
+								"{call StoredProcedureName (  [Parameter Definition]  )}"
+								) 
+		Types of Parameters
+			Input(Default)
+			Output
+			Input Output	
+			
+		To Set Parameter Value
+			setXxx(Position, Value)	
+			
+			
+	Creating StoredProcedure (IN) in MySQL
+		CREATE PROCEDURE `addNewEmployee`(IN id INT, IN name VARCHAR(255), IN email VARCHAR(255))
+		BEGIN
+		INSERT INTO newemployees(employee_id,employee_name,email)
+		VALUE(id,name,email);
+		END						
+								
+			
+	Executing a StoredProcedure
+		CALL addNewEmployee('15','shahtr','shahrukhtramboo@gmail.com');	
+		
+
+	Batch Processing
+		addBatch() - Returns void
+		executeBatch() - Returns an array of Integer
+	
+	
+	
+		
+	Creating StoredProcedure (OUT) in MySQL	
+		CREATE PROCEDURE `countEmployees`(IN name VARCHAR(255),OUT total INT)
+		BEGIN
+		select count(employee_name) INTO total FROM newemployees where employee_name = name;
+		END									
+	
+	Executing a StoredProcedure
+		CALL countEmployees('shahrukh',@total);
+		select @total;
+	
+	
+	
+		
+	Creating StoredProcedure (INOUT) in MySQL
+		CREATE DEFINER=`root`@`localhost` PROCEDURE `addToId`(INOUT idValue INT)
+		BEGIN
+		DECLARE addextra INT DEFAULT 13;
+		select employee_id INTO idValue from newemployees where employee_id = idValue;
+		SET idValue = idValue + addextra;
+		SELECT idValue;
+		END
+		
+	Executing a StoredProcedure
+		SET  @value1=12;
+		Call addToId(@value1);
+		select @value1;
+		
+	
+	
+		
+	Creating ResultSets Stored Procedure in MySQL
+		CREATE DEFINER=`root`@`localhost` PROCEDURE `callingResultsets`(IN name VARCHAR(255))
+		BEGIN
+			SELECT * FROM newemployees where employee_name = name;
+		END	
+		
+	Executing a StoredProcedure
+		Call callingResultsets('shahrukh');	
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 			
 	
 	

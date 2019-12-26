@@ -8,9 +8,9 @@ import java.sql.Statement;
 public class UpdatableResultSetDemo {
 	public static void main(String[] args) throws SQLException {
 		try (
-				Connection conn = DBUtil.getConnection(DBType.ORADB);
+				Connection conn = DBUtil.getConnection(DBType.MYSQLDB);
 				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-				ResultSet rs = stmt.executeQuery("select Department_Id,Department_Name,Manager_Id,Location_Id from Departments");
+				ResultSet rs = stmt.executeQuery("select employee_id,employee_name,email from newemployees");
 				//we should remember that a query cannot use a select *, and also it is mandatory to select all the non-null columns
 				//and a query must select single table set only, no joins
 				

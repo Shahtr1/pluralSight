@@ -11,9 +11,9 @@ public class TestManageDBResource {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBUtil.getConnection(DBType.ORADB);
-			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			rs = stmt.executeQuery("select * from Countries");
+			conn = DBUtil.getConnection(DBType.MYSQLDB);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select * from country");
 			rs.last();
 			System.out.println("Total No. of Rows  :"+rs.getRow());
 			

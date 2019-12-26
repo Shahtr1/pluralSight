@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class TestPreparedInsert {
 	public static void main(String[] args) throws SQLException {
-		Connection conn =  DBUtil.getConnection(DBType.ORADB);
+		Connection conn =  DBUtil.getConnection(DBType.MYSQLDB);
 		
 		int employee_id;
 		String employee_name, email;
@@ -24,7 +24,7 @@ public class TestPreparedInsert {
 		System.out.println("Enter Email : ");
 		email = scanner.nextLine();
 		
-		String sql = "insert into newemployee values(?,?,?)";
+		String sql = "insert into newemployees values(?,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
