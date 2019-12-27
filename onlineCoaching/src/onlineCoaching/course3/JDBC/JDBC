@@ -224,7 +224,37 @@ A Stored Procedure is a group of SQL Statements that perform a particular task
 				);
 				
 				
-	
+	Working with Metadata
+		Metadata Programming is useful to know the capabilities, limitations and facilities
+		of underlying database software and its resources
+		
+		JDBC Metadata Programming Supports:
+			Database Metadata
+			ResultSet Metadata
+			Parameter Metadata
+			
+	Accessing Database Metadata
+		Retrieve the Metadata instance
+			DatabaseMetaData databaseMetadata = myConn.getMetaData();
+		DatabaseMetada methods
+			getDatabaseProductName()
+			getDatabaseProductVersion()
+			getDriverName() etc.
+			
+	Accessing ResultSet Metadata
+		ResultSetMetadata object is a class that implements java.sql.ResultSetMetadata
+		To define: ResultSetMetaData rsmd = myResultSet.getMetaData();
+		
+		ResultMetaData methods
+			getColumnName()
+			getPrecision()
+			isAutoIncrement()
+			getColumnType()
+			getScale()
+			isNullable()
+			getColumnTypeName()
+			getColumnCount()
+			isCurrency and many more...					
 	
 	
 	
