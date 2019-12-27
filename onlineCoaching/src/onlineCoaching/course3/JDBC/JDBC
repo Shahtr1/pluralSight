@@ -178,9 +178,52 @@ A Stored Procedure is a group of SQL Statements that perform a particular task
 	Executing a StoredProcedure
 		Call callingResultsets('shahrukh');	
 		
+	
+	
+	What is CLOB?
+		A CLOB(Character Large Object) is a collection of character data stored as a single entity in a database
+		CLOBs are typically used to store large text documents (Plain text or XML)
 		
+		Note: Database support for CLOBs is not Universal
 		
+		Storing and Retrieving CLOB Data
+			MySQL
+				Create table newemployees2
+				(
+					employee_id int(10),
+					first_name varchar(60),
+					last_name varchar(60),
+					Resume LongText
+				)
+				Longtext can store at a maximum of 4GB of characters
+				
+			Oracle
+				Create table newemployees2
+				(
+					employee_id number(10),
+					first_name varchar(60),
+					last_name varchar(60),
+					Resume CLOB
+				)
+				
+	What is BLOB?
+		A BLOB(Binary Large Object) is a collection of Binary data stored as a single entity in a database
+		BLOBs are typically Documents, Images, Audio or other Binary objects
+						
+		Note: Database support for BLOBs is not Universal
 		
+		Storing and Retrieving BLOB Data
+			MySQL
+				Create table newemployees3
+				(
+					employee_id int(10),
+					first_name varchar(60),
+					last_name varchar(60),
+					Resume LongText,
+                    Photo blob
+				);
+				
+				
 	
 	
 	

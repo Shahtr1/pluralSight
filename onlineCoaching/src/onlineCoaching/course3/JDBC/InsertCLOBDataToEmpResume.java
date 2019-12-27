@@ -1,0 +1,33 @@
+package onlineCoaching.course3.JDBC;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class InsertCLOBDataToEmpResume {
+
+	public static void main(String[] args) throws SQLException, FileNotFoundException {
+		// TODO Auto-generated method stub
+		Connection conn = DBUtil.getConnection(DBType.MYSQLDB);
+		PreparedStatement pstmt = null;
+		
+		String sql = "update newemployees2 set resume = ? where employee_id = 1";
+		pstmt = conn.prepareStatement(sql);
+		
+		String resumeFile = "d:/resume/resume.txt";
+		File file = new File(resumeFile);
+		FileReader reader = new FileReader(file);
+		
+		pstmt.setCharacterStream(1, reader,(int)file.length());
+		
+		pstmt.executeUpdate();
+		
+		System.out.println("Resume Updated Successfully...");
+		pstmt.close();
+		conn.close();
+	}
+
+}
