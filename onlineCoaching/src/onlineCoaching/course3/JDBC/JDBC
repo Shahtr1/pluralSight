@@ -254,12 +254,40 @@ A Stored Procedure is a group of SQL Statements that perform a particular task
 			isNullable()
 			getColumnTypeName()
 			getColumnCount()
-			isCurrency and many more...					
+			isCurrency and many more...		
+			
 	
+	Understanding Connection Pooling
+		
+		When a Java application interacts withs a database that connection process consists of several time	consuming steps.
+		A physical channel such as a socket or a named pipe, must be established.
+		The initial handshake with a server must occur. The connection string information must be parsed.
+		The connection must be authenticated by a server. Checks must be run for enlisting in the current transaction or so on.
+		In pratice, most applications use only one or few different configurations for connections.
+		Which means that during application many same connections will be repeatedly opened and closed.
+		To avoid that JDBC uses connection pooling.
+		
+		JDBC Connection Pool is a factory that consists of readibly available JDBC Connection objects before actually being used.
+		
+		Advantage:
+			Use minimum no. of Connection objects to give services to maximum clients.
+		
+		Understanding:
+			A pool manager creates the initial connections from the database. When an application requires a connection, one of these physical connections is provided.
+			When the application is finished the logical connection is disconnected, but the oysical connection is returned to the pool for reuse, such that next application can use.
+			 					
+		Two Types of HDBC Connection Pools
+			JDBC Driver Managed / Standalone JDBC Connection
+				for small applications, desktop applications.
+			Web Server / Application Server Managed JDBC Connection
+				for large applications.
+			
+			Orcale thin driver or OCI driver, gives one built in JDBC Connection Pool for Oracle.
+			JDBC Datasource object means it is the object of a java class that implements javax.sql.Datasource Interface
 	
-	
-	
-	
+			JDBC Datasource object represents JDBC Connection Pool.
+			
+			
 	
 	
 	
