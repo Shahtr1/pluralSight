@@ -1,0 +1,198 @@
+Concurrency: "the art of doing several things at the same time"
+
+WHat is a Thread?
+	A thread is defined at the Operating System level
+	A thread is a set of instructions
+	An application can be composed of several threads
+	Different threads can be executed at the same time
+	The JVM works with several threads(GC, JIT, ...)
+	
+What Does "At the Same Time" Mean?
+	
+What is happening at the CPU Level
+	1st Case: CPU with Only One Core
+		It can do one thing at a time
+	2nd Case: CPU with Multiple Cores
+		It can do two things at the same time 	
+		
+Who is responsible for the CPU sharing
+	A special element called a scheduler
+	There are three reasons for the scheduler to pause a thread:
+		The CPU should be shared equally among threads
+		The thread is waiting for some data
+		The thread is waiting for another thread to do something
+		
+Race Condition	
+	Accessing data concurrently may lead to issues!
+	It means that two different threads are trying to read and write the same variable at the same time.
+	
+Example: The Singleton Pattern
+	public class Singleton{
+		private static Singleton instance;
+		private Singleton(){}
+		public static Singleton getInstance(){
+			if(instance == null){
+				instance = new Singleton();
+			}
+			return instance;
+		}	
+	} 
+
+What is happening if two threads are calling getInstance()?
+	Well Known Race Condition Case:
+		
+			Thread T1						    Thread T2
+	Checks if Instance Is null?				Waiting
+			  The answer is yes
+			Enters the if block
+	
+(The thread scheduler pauses T1)
+											Checks if instance is null?
+											The answer is yes
+											Enters the if block
+											Creates an Instance of Singleton
+											
+											(The thread scheduler pauses T2)
+Creates an instance of Singleton
+(thereby destroying the instance of T2)	
+
+					How to avoid that?
+					
+The answer is synchronization.													
+	Synchronized Example: The Singleton Pattern
+		public class Singleton{
+			private static Singleton instance;
+			private Singleton(){}
+			public static synchronized Singleton getInstance(){
+				if(instance == null){
+					instance = new Singleton();
+				}
+				return instance;
+			}	
+		}
+																					 	
+Under the hood, the Java machine uses a special object, called lock object that has a key
+In fact every object in the Java language, has this key, that is used for synchronization.
+What does it change to our code? Well, when a thread want to enter this protected method,
+it will make a request on this lock object, give me your key. If the lock object has the key
+available it will give it to this thread it can run it freely.
+
+So far synchronization to work, we need a special, technical object that will hold the key
+In fact, every Java object can play this role
+This key is defined internally in the Object class, thus making it available for all the Java objects we define in our apps.
+This key is also called a monitor.
+Which object is chosen to hold this key?
+	public static synchronized Singleton getInstance(){
+				if(instance == null){
+					instance = new Singleton();
+				}
+				return instance;
+			}
+		In this code, the key is the Singleton class itself.
+		A synchronized static method uses the class as a synchronization object.
+	
+	-------------------------------------------------------
+	
+	if on a non-static method
+		public synchronized String getName(){
+			return this.name;
+		}
+	In this code, the key is the instance of the class
+	A synchronized non-static method uses the instance as a synchronized object.
+	
+	-----------------------------------------------------------
+	
+	A dedicated explicit object to conduct synchronization
+		public class Person{
+			private final Object key = new Object();
+			public String init(){
+				synchronized(key){
+					//do something
+				}
+			}
+		}
+	It is always a good idea to hide an object used for synchronization
+		
+	---------------------------------------------------------------	
+	
+	If we really want is to prevent two threads to execute the methods having same name at the same time, in all the instances of the Person class, then we need our lock object to be bound nit to each instance of our class but to the class itself. 
+	
+--------------------------------------------------------------------
+
+Reentrant Locks and Deadlocks
+	What do we mean by Locks Are Reentrant?	
+		Suppose we have two instances of Person class, mary and john, and we have a bunch of synchronized method in those instances.
+		It turns out, first synchronized method of mary instance calls out other synchronized method of john instance,that happens to be synchronized with the same lock.
+		This thread will be allowed.
+		When a thread holds a lock, it can enter a block synchronized on the lock it is holding.
+		
+	What do you mean by Deadlocks?
+		Suppose we have two instances of Person class, mary and john,It turns out, first synchronized method of mary instance calls out other synchronized method of john instance.
+		but the first method is synchronized with the red key for instance. and the second is synchronized with the green key.
+		For some reason this green protected method calls another method (third one) which is also protected by the red key. 
+		What will happen?
+		The blue thread is going to take the red key,and begin to run this first method. And at the same time, the purple thread is going to take the green key, and to run the 
+		other method. At some point, the blue thread will need the green key to enter the green method, but the purple thread has it. So this blue thread has to wait.
+		And the purple thread will arrive at the point of code where it needs the red key to continue to run. And unfortunately the red key is not available, because it is held
+		by the blue thread. 
+		
+		Deadlock
+			A deadlock is a situation where a thread T1 holds a key needed by a thread T2, and T2 holds the key needed by T1
+			
+The JVM is able to detect deadlock situations, and can log information to help debug the application.
+	
+But there is not much we can do if a deadlock situation occurs , beside rebooting the JVM
+	
+-------------------------------------------------------------------------
+
+Runnable Pattern to Launch Threads
+	The most basic way to create threads in Java is to use the Runnable Pattern
+	First create an instance of Runnable
+	Then pass it to the constructor of the Thread class
+	Then call the start() method of this thread object
+	
+	(Java 7 way)
+	Runnable runnable = new Runnable(){
+		public void run(){
+			String name = Thread.currentThread().getName();
+			sysout("I am running in thread " + name);
+		}
+	}					
+				
+	(Java 8 way)
+	Runnable runnable = () -> {
+		String name = Thread.currentThread().getName();
+		sysout("I am running in thread " + name);
+	}
+	
+------------------------------------------------------------
+	Second, pass it to the constructor of the Thread class
+	Third start the thread!
+	
+	Thread thread = new Thread(runnable);
+	thread.start();
+
+------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
