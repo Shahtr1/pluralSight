@@ -173,6 +173,224 @@ Runnable Pattern to Launch Threads
 	thread.start();
 
 ------------------------------------------------------------
+	
+How to lauch a new thread?
+	
+	@FunctionalInterface
+	public interface Runnable{
+		void run()
+	}
+	------------------------
+	Runnable task = () -> sysout("Hello world");
+	Thread thread = new Thread(task);
+	thread.start();
+	
+	-------------------------------
+	
+Knowing in which thread a task is executed
+	The Thread.currentThread() static method returns the current thread
+	---------------------------------
+	
+How to stop a thread?
+	There is a method in the Thread class called stop()
+		This method should not be used.
+		Once this method was published, its was not possible to remove it on the thread class without introducing a backward incompatibility.
+		It is here for legacy.
+		
+		The right pattern is to use the interrupt() method
+-------------------------------------------------------		
+Calling interrupt() on a running thread
+	The code of the task should call isInterrupted() to terminate itself	
+	Thread t1 = ...;
+	t1.interrupt();		
+	
+	Runnable task = () -> {
+		while(! Thread.currentThread().isInterrupted()){
+			//the task itself
+		}
+	}
+----------------------------------------------------------
+Stopping a Thread
+	The call to interrupt() causes the isInterrupted() method to return true
+	If the thread is blocked, or waiting, then the corresponding method will throw an InterruptedException
+	The methods wait()/notify(),join() throw InterruptedException.	
+	
+----------------------------------------------------------
+
+What is a producer / consumer?
+	A producer produces values in a buffer
+	A consumer consumes the values from this buffer
+	Be careful: the buffer can be empty, or full
+	Producer and consumers are run in their own thread
+	
+	A Simple Producer
+		int count = 0;
+		int[] buffer = new int[BUFFER_SIZE];
+		
+		class Producer{
+			public void produce(){
+				while(isFull(buffer)){}
+				buffer[count++] = 1;
+			}
+		}
+		
+	A Simple Consumer
+		int count = 0;
+		int[] buffer = new int[BUFFER_SIZE];
+		
+		class Consumer{
+			public void consume(){
+				while(isEmpty(buffer)){}
+				buffer[--count] = 0;
+			}
+		}	
+-------------------------------------------------------------
+
+What is wrong with the above code?
+	Race condition!
+	Several threads are reading and writing the buffer at the same time = race condition
+	This will corrupt the array
+
+-------------------------------------------------------------
+
+Fixing the producer / consumer
+	One way to fix things is to synchronize the access to the array				
+	
+	A Simple Producer
+		int count = 0;
+		int[] buffer = new int[BUFFER_SIZE];
+		
+		class Producer{
+			public void synchronized produce(){
+				while(isFull(buffer)){}
+				buffer[count++] = 1;
+			}
+		}
+		
+	A Simple Consumer
+		int count = 0;
+		int[] buffer = new int[BUFFER_SIZE];
+		
+		class Consumer{
+			public void synchronized consume(){
+				while(isEmpty(buffer)){}
+				buffer[--count] = 0;
+			}
+		}
+		
+	Will it fix out problems?
+		Synchronization can fix our race condition problem, but not if we write it like that
+		So we do it like this below.
+	-------------------------------------------------------------------		
+	private Object lock;
+		
+		class Consumer{
+			public void consume(){
+				synchronized(lock){
+					while(isEmpty(buffer)){}
+					buffer[--count] = 0;
+				}
+			}
+		}
+		
+		class Producer{
+			public void produce(){
+				synchronized(lock){
+					while(isFull(buffer)){}
+					buffer[count++] = 1;
+				}
+			}
+		}		
+---------------------------------------------------------------------------------
+	This code will work if the lock object is the same for all the producers and consumers
+	
+	NOW IS IT REALLY FIXED????????????????????????????????
+
+	What happens if the buffer is empty?
+		The thread executing this consumer is blocked in the while loop
+		So the producer has no chance to add objects to the buffer!
+	
+	It will lead to deadlock.
+-----------------------------------------------------------------------------
+
+Fixing the producer / consumer (again)
+	We need a way to "park" a thread while he is waiting for some data to be produced
+	Without blocking all the other threads
+	So the key held by this thread should be released while this thread is "parked"
+	This the wait / notify pattern
+
+------------------------------------------------------------------------------------
+
+Wait / Notify
+	wait() and notify() are two methods from the Object class
+	They are invoked on a given object
+	The thread executing the invocation should hold the key of that object
+	So: wait() and notify() cannot be invoked outside a synchronized block
+			
+Calling wait()
+	Calling wait() releases the key held by this thread
+	And puts that thread in a WAIT state
+	The only way to release a thread from a WAIT state is to notify it
+
+Calling notify()
+	Calling notify() releases a Thread in WAIT state and puts it in RUNNABLE state
+	This is the only way to release a waiting thread
+	The released thread is chosen randomly
+	There is also a notifyAll() method			
+				
+----------------------------------------------------------------------
+private Object lock;
+		
+		class Consumer{
+			public void consume(){
+				synchronized(lock){
+					if(isEmpty(buffer))
+						lock.wait();
+					buffer[--count] = 0;
+					lock.notifyAll();
+				}
+			}
+		}
+		
+		class Producer{
+			public void produce(){
+				synchronized(lock){
+					if(isFull(buffer))
+						lock.wait();
+					buffer[count++] = 1;
+					lock.notifyAll();
+				}
+			}
+		}
+
+------------------------------------------------------------------------------
+ 
+ A Thread Has A State
+ 	States --->
+ 		New
+ 		 |			Blocked(Waiting at the entrance of a synchronized block)
+ 		 |			|
+ 		 |			|
+ 	  Runnable---------Waiting(Parked using a wait() call)
+ 	  	 |			|
+ 	  	 |			|
+ 	  	 |			Timed_waiting(Parked using a sleep(timeout) or wait(timeout) call)
+ 	 Terminated	  
+ 		
+ 	Getting the state of a thred
+ 		The getState() method returns a enumerated values of type Thread.State
+		Thread t = ...;
+		Thread.State state = t.getState();
+		
+		The State enumeration is a member enumeration of the Thread class
+			public enum State{
+				NEW,RUNNABLE,TERMINATED,BLOCKED,WAITING,TIME_WAITING;
+			}	
+		
+
+
+
+
 
 
 
