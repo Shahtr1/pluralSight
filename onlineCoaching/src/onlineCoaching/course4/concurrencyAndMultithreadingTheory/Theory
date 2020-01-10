@@ -377,7 +377,7 @@ private Object lock;
  	  	 |			Timed_waiting(Parked using a sleep(timeout) or wait(timeout) call)
  	 Terminated	  
  		
- 	Getting the state of a thred
+ 	Getting the state of a thread
  		The getState() method returns a enumerated values of type Thread.State
 		Thread t = ...;
 		Thread.State state = t.getState();
@@ -387,22 +387,152 @@ private Object lock;
 				NEW,RUNNABLE,TERMINATED,BLOCKED,WAITING,TIME_WAITING;
 			}	
 		
+Ordering read and Write Operations on A Multi-Core CPU
+	What is the 'happens before' link?
+	What does volatile mean?The impact of 'false sharing' on code
+	
+Synchronization
+	Synchronization protects a block of code
+	Guarantees	this code is executed by one thread at a time
+	Prevents race condition
+----------------------------------------------------------------------
+	public void consume(){
+		synchronized(lock){
+			while(isEmpty(buffer)){}
+			buffer[--count] = 0;
+		}
+	}
+	public void produce(){
+		synchronized(lock){
+			while(isFull(buffer)){}
+			buffer[count++] = 1;
+		}
+	}
+	
+	lets have a look at the count variable in consume()
+		1) reads count from memory
+		2) decrement it
+		3) writes count back to memory
+		
+	lets have a look at the count variable in produce()	
+		1) reads count from memory
+		2) increment it
+		3) writes count back to memory
+		
+		
+----------------------------------------------------------------------	
+Memory Access
+	20 years ago, when CPU had no cache, this code was working fine
+	But nowadays, thinks do not work like that any more!
+	A CPU does not read a variable from the main memory, but from a cache
 
+----------------------------------------------------------------------
+						CPU Architecture			
+How does the CPU work with its main memory? Well, we have a first electronic component called CPU, in fact it is called CPU but
+there are many sub-CPUs on it called "cores". And there is the main memory,which is different electronic component,
+linked to the main CPU using a special bus . On a CPU we may have several cores, suppose we have four.Each cores have several
+layers of memory caches called "L1","L2", and a common third layer called "L3".
 
+Why Has It Been Made Like That?
+	Because access to caches is much faster than access to main memory because that is limited to speed of bus.
+	Access to the main memory: ~100ns
+	Access to the L2 cache: 7ns
+	Access to the L1 cache: 0.5ns
+	
+There Are Tradeoffs
+	Size of the main memory: several GB
+	Size of the L2 cache: 256kB
+	Size of the L1 cache: 32kB	
+	 		
+--------------------------------------------------------------------------
+Count with 0 is in main memory
+Our producer which is running on Core 1 needs a copy of this count variable,
+so this count variable will be copied in the L1 cache of the Core 1 of the CPU.
+The Core 1 can modify this variable, that is increment it. But it turns out that Core 2,
+which is running the consumer, also needs the same count variable. Now the problem comes
+from the fact that the count variable is really stored in two places on my CPU, first in main memory
+but the value in there has not been updated yet because the write to this main memory is much, much slower than the write to the 
+L1 cache. But my Core 2, since this variable is synchronized, should get the value 1 from the L1 cache of the Core 1 and the not the value 0 from main memory.
+So it needs a technical trick here to know that the write value is in the L1 cache of Core 1 and not in the main memory.
+This is visibility! 
+Visibility is about informing the other caches of my CPU that a variable has been modified and that the write value is in one of the caches of the CPU and should
+should not be fetched from the main memory.
+-------------------------------------------------------------------------
 
+Visibility
+	A variable is said visible 
+		if the writes made on it are 'visible' which means that the reads made on this variable are going to return the correct value.
+		The nice thing is that all the synchronized writes are visible.
+-------------------------------------------------------------------------
+"Happens Before" Link
+-------------------------------------------------------------------------
+The Java Memory Model
+	Multicore CPU brings new problems since variable can be stored in multiple places			 
+	Read and writes can really happen at the same time
+	A given variable can be stored in more than one place
+	Visibility means "a read should return the value set by the last write"
+	What does last mean in a multicore world?
 
+	We need a timeline to put read and write operations on
 
+So what does the Java Memory Model tells us?
+	Suppose we have write operation on Thread T1
+		1) T1 writes to x	---->			x = 1	
+	Another Thread T2 which is reading this variable. It reads x and copy the value in another variable r.
+		2) T2 reads x and copy it to r	---->		r = x
+		
+		3) What is the value of r?
+			
+There are two answers and the java memory model fixes these two answers.
+	If there is no "happens before" link between the two operations, the value of r is unknown. it should be 1, or 0 which is the default value.
+	If there is a "happens before" link between the two operations, the value of r is 1.
 
+How Can We Set Up A "Happens Before" Link?
+	There is no such keyword in the Java language...
 
+---------------------------------------------------------------------	
+Happens before link
+	A "happens before" link exists between all synchronized or volatile write operations and all synchronized or volatile read operations that follow.
+		
+Happens Before Examples
+	Two operations:	
+	1) a write operation
+	2) a read operation
+	
+	int index;
+	void increment(){
+		index++;
+	}
+	void print(){
+		sysout(index);
+	}
 
+	What does this code print in multithread?
+		Impossible to say.
+------------------------------------------------------------
+	int index;
+	void synchronized increment(){
+		index++;
+	}
+	void synchronized print(){
+		sysout(index);
+	}
 
+	What does this code print in multithread?
+		The correct value is always printed, as the value will be the last value updated by the write operation.
+		
+	--------------------------------------------------------
+	
+	volatile int index;
+	void increment(){
+		index++;
+	}
+	void print(){
+		sysout(index);
+	}
 
-
-
-
-
-
-
+	What does this code print in multithread?	
+	The variable is volatile --> the correct value is always printed
 
 
 
