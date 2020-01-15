@@ -533,6 +533,94 @@ Happens Before Examples
 
 	What does this code print in multithread?	
 	The variable is volatile --> the correct value is always printed
+---------------------------------------------------------------------------
+A More complex example
+	int x , y , r1 , r2;
+	Object lock = new Object();
+	
+	void firstMethod(){
+		x = 1;
+		synchronized(lock){
+			y = 1;
+		}
+	}
+	
+	void secondMethod(){
+		synchronized(lock){
+			r1 = y;
+		}
+		r2 = x;
+	}
+	
+	firstMethod() is writing x and y
+	secondMethod() is reading them
+	They are executed in threads T1 and T2
+	What is the value of r2?
+		Due to the way the code is written, there is a happens-before link between:
+			x = 1 and y = 1
+			r1 = y and r2 = x
+		If T1 is the first to enter the synchronized block, then the execution is in this order:
+			x = 1
+			y = 1				(Happens- before link between a sync write and
+			r1 = y					a sync read)
+			r2 = x
+			The value of r2 is 1
+		If T2 is the first to enter the synchronized block, then the execution is in this order:
+			r1 = y
+			r2 = x or x = 1?(No happens-before link between r2 = x and x = 1)	
+			y = 1
+			The value of r2 may be 0 or 1
+		(Hence the code is buggyy) :(	
+-----------------------------------------------------------------------------
+Synchronization
+	Guarantees the exclusive execution of a block of code
+
+Visibility
+	Guarantees the consistency of the variables
+
+Visibility is a weaker constraint that synchronization because two threads can execute the read and write operations at the same time, but consistent with the real value
+				
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+False Sharing
+	False sharing happens because of the way the CPU caches work
+	The cache is organized in lines of data
+	Each line can hold 8 longs(64 bytes)
+	When a visible variable is modified in an L1 cache, all the line is marked "dirty" for the other caches		
+	A read on a dirty line triggers a refresh on this line
+	Example:
+	From Main Memory to L1 Cache
+		volatile long a,b;
+		void firstMethod(){
+			a++;
+		}
+		void secondMethod(){
+			b++;
+		}
+	The first Thread T1 running firstMethod and the second Thread T2 running secondMethod
+	As T1 is only interested in a, and T2 in b.
+	The T1 is running in Core1 and since it needed a variable a, it loaded a line of cache from the main memory with this variable in this line.
+	And the T2 did the same, loaded a line of cache from the main memory with the b variable in this line.
+	The memory i organized by the variable and the JVM in contiguous manner, it turns out that "a" and "b" are written in two contiguous areas of the main memory.
+	So while loading this line of cache T1 also loaded the "b" variable and T2 also loaded the "a" variable .
+	
+	Now T1 is going to increment a variable, thus marking this line of cache as dirty.and this mark as dirty will be broadcasted to the other caches of the CPU, including the cache of Core2.
+	Then Core2 wants to increment the b variable, but unfortunately the line of cache that it loaded from the main memory has been marked as dirty by Core 1, so when it tries to read the variable b it is a cache miss, it has to go back to the main memory to fetch the value of b.
+	Which is bad.
+	
+	False sharing happens in an invisible way.
+	Hard to predict, hits your performance.
+	
+	
+
+
+
+
+
+
+
+
+
 
 
 
