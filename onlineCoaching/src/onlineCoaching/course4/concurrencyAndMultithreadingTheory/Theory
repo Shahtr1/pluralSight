@@ -611,9 +611,116 @@ False Sharing
 	False sharing happens in an invisible way.
 	Hard to predict, hits your performance.
 	
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Implementing a Thread-safe singleton on a multicore CPU
+	Singleton
+		a singleton class should have only one instance
+		
+	public class Singleton{
+		private static Singleton instance;
+		
+		private final Singleton(){} //this constructor cannot be called outside this class.
+		
+		public static Singleton getInstance(){
+			if(instance == null){ //read operation
+				instance = new Singleton(); //write operation
+			}
+			return instance;
+		}
+	}		
+
+	if write and read operation occur in different threads, it is race condition
+	No happens before link between them.
 	
+	So its not thread safe!
+	1st Solution: make the read and the write operations "synchronous"
+	
+The Synchronized Singleton pattern
+	public class Singleton{
+		private static Singleton instance;
+		
+		private final Singleton(){} //this constructor cannot be called outside this class.
+		
+		public static Singleton synchronized getInstance(){
+			if(instance == null){ //read operation
+				instance = new Singleton(); //write operation
+			}
+			return instance;
+		}
+	}	
+------------------------------------------------------------------------
+Execution of the above code on a single core CPU
+	Suppose that two threads T1 and T2 are calling the getInstance() method
+	T1 is the first to enter the synchronized block.
+	1) T1 is entering the getInstance() 
+	2) T1 executes the test
+	3) The thread scheduler gives the hand to T2
+	4) T2 tries to enter getInstance() since the key is not available t1 is still holding it, it will realize it cannot do that so thread scheduler will give the hand to T1 again, finishes getInstance()
+	5) T2 can enter getInstance() and read instance
+------------------------------------------------------------------------
+Execution of the above code on a two core CPU
+	Suppose that two threads T1 and T2 are calling the getInstance() method
+	1) T1 is entering getInstance()
+	2) T1 executes the test
+	3) The thread scheduler gives the hand to T2 at the same time 
+	4) T2 tries to enter getInstance()
+	5) T1 finishes getInstance()
+	6) T2 can enter getInstance() and read instance
+------------------------------------------------------------------------------------
+Execution of the above code on a multi core CPU
+	Suppose we have four cores. I saw that T1 was running first, then T2 needs to wait for T1 to leave the synchronized method to be able to read instance.
+	And if on my two other cores i have two other threads, T3 and T4 who want also to read my instance, they would have to wait for T2 to release key so that 
+	would be a performance issues, as instance has already been made, so why wait?
+	
+	Since the read is synchronized, it cannot be made in parallel
+	Once instance has been initialized, we want to be able to allow its reading in parallel
+	
+The first solution was The Double Check Locking pattern:
+	public class Singleton{
+		private static Singleton instance;
+		
+		private final Singleton(){} //this constructor cannot be called outside this class.
+		
+		public static Singleton getInstance(){
+			if(instance != null){ 
+				return instance; 
+			}
+			synchronized(key){
+				if(instance == null){
+					instance = new Singleton();
+				}
+				return instance;
+			}
+		}
+	}	
+	But there is a bug in the above code..   :(
 
-
+	If instance is not null, we read it and return it
+	Is it a synchronized or volatile read? No
+		
+	If instance is null, we create it and return it.
+	Is it a synchronized or volatile write? Not volatile but it takes place in a synchronized block.So Yes!
+	
+	So we have a non synchronized read that is supposed to return the value set by the synchronized write
+	So we have the guarantee that the read will get the value set by the write?
+	For that we needs a happens before link
+	And we do not have it!
+	
+Buggy Double Check Locking
+	It is a concurrent bug
+	Cannot be observed on a single core CPU
+	The effect can be very weird: one can observe an object that is not fully built
+	
+	In our Singleton class we have a private static field called instance of type Singleton.
+	It is just a pointer that will point to our only instance of the Singleton class.
+	But the creation of this object is in fact a three step process. The first step is memory allocation,
+	the second step is copying the pointer to the Singleton field which is called instance, and then the construction process of the Singleton object.
+	This allocated memory belongs to the Singleton class, it has a certain number of fields, certain number of methods etc.
+	And between Step second and third we do not know which one is going to be executed first. If the construction process is executed first,then the copy of the pointer, everything will be fine because 
+	we cannot observe a non null instance pointer that points to a non fully piece of memory, but if the copy of the pointer occurs first, and that we read this instance in another field in another thread, then we 
+	will have visibility on a portion of memory that has been allocated but is not fully initialized yet, and this weird case could happen in Double Check Locking. 
+	
+	  
 
 
 
