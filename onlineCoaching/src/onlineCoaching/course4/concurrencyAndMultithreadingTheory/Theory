@@ -720,7 +720,102 @@ Buggy Double Check Locking
 	we cannot observe a non null instance pointer that points to a non fully piece of memory, but if the copy of the pointer occurs first, and that we read this instance in another field in another thread, then we 
 	will have visibility on a portion of memory that has been allocated but is not fully initialized yet, and this weird case could happen in Double Check Locking. 
 	
-	  
+A Possible Solution
+	Since the problem comes from the non-synchronized / volatile read, let us make it volatile
+	public class Singleton{
+		private static volatile Singleton instance;
+		
+		private final Singleton(){} //this constructor cannot be called outside this class.
+		
+		public static Singleton getInstance(){
+			if(instance != null){ 
+				return instance; 
+			}
+			synchronized(key){
+				if(instance == null){
+					instance = new Singleton();
+				}
+				return instance;
+			}
+		}
+	}  
+	But the same performance issues as in the synchronized case.
+	What is the right SOLUTION then?
+	
+The Right Solution
+	public enum Singleton{
+		INSTANCE
+	}	
+Since enums are inherently serializable, we dont need to implement it with a serializable interface.
+The reflection problem is also not there.
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+let us look at LongWrapper.java and RaceCondition.java
+	change to private volatile long
+	and remove synchronized block
+	The answer wouldn't be same
+	it should work so whats happening here?
+	The problem is that this operation should be atomic. It should not be interrupted when a thread is running it, by another thread, so what we need here is not just volatility, 
+	so it is really the synchronization that will guarantee that the thread will not be interrupted between the reading and writing of this variable. 
+
+but the code of LongWrapper.java and RaceCondition.java is buggy.
+	but it is a subtle bug.
+	let us look again
+	we have synchronized read followed by a synchronized write, which is correct, and it will correctly incremented.
+	but getValue() is neither synchronized and volatile.
+	so make it synchronized too.
+	
+///////////////////////////////////////////////////////////////////////////////
+
+NOTE: Daemon thread is a low priority thread that runs in background to perform tasks such as garbage collection
+
+
+Now an example from Java puzzlers 
+	look at Worker.java
+		We have a class that extends Thread. In this class there is a main method
+		It just calls the start method of the thread that will in turn call the run method overriden in that class. In this run method there is 
+		basically a while called here that will keep running until the quitting time is set to true. Here we are working, we keep printing 'Still Working...'
+		and once our work is done just coffee is good because its probably the time for coffee.
+		And in the working method there is just the thread.sleep called that will wait for 300 millisecond, great!
+		The problem is  that quitting time will never be set to true so we need a way to set this variable to true
+		
+		So we set up a timer. A timer is a special object that will take a timer task as a parameter. It is basically the same as a runnable and calling this schedule method 
+		will just run this task once after 500 milliseconds which is the second argument. Here after 500ms we are calling worker.keepWorking and this keepWorking method
+		which is here synchronized and sets quittingTime to false and then after 400ms we call worker.quit() which is also a synchronized method and on the same object as the 
+		keepWorking method so if a thread is executing this code, another thread cannot execute this one at the same time, and in the quit method, the quittingTime is set to true,
+		then join the thread, that is wait for the thread to complete before releasing the key. Basically since i am caling quit method after 400ms, i do not expect the above timer
+		class to reset the quitting time to false.
+		But the code is not working as expected.
+		
+		we need to be sure that quittingTime = true is properly called and quittingTime = false is never called.
+		So lets us add some sysout's to know whats happening!! 
+		we can see that 'Back from join' is never printed!
+		So it seems that our thread is blocked on the join call.
+		 WHY?
+		Which means other thread took the key from quit to keepWorking
+		Ahaaaaaaaaaaaaaaa!!!!!!!!!!
+		Lets open the declaration of join method  
+			There is another join there. Lets see that too
+				It is a synchronized method while join method was not.
+				As locks are renterant so no problem		
+				we can see there is a wait there, he is the stupidShit!!!!!
+				It will release the key held by the thread.
+				So there is a lockMess here.
+		How can we fix this problem?
+			We would just change the key we are holding by creating a special lock object.				
+				We would never have problem if we use private Object object as a lock 
+-------------------------------------------------------------------------------------------------
+
+How to Write Correct Concurrent Code?
+	1) Check for race conditions
+			They occur on field(not variables / parameters)
+			2 threads are reading / writing a given field
+	2) 	Check for the happens-before link
+			Are the read / write volatile?
+			Are they synchronized?
+			If not, there is a probably bug
+	3)	Synchronized or volatile?
+			Synchronized = atomicity
+			Volatile = visibility				
 
 
 
@@ -733,9 +828,12 @@ Buggy Double Check Locking
 
 
 
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
 	

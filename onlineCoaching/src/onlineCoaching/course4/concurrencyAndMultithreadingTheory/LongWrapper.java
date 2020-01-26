@@ -4,11 +4,14 @@ public class LongWrapper {
 	
 	private Object key = new Object();
 	private long l;
+//	private volatile long l;
 	public LongWrapper(long l) {
 		this.l = l;
 	}
 	public long getValue() {
-		return l;
+		synchronized(key) {
+			return l;
+		}	
 	}
 	public void incrementValue() {
 		synchronized(key) {
